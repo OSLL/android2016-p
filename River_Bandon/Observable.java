@@ -1,5 +1,5 @@
 
 public interface Observable {
     void registerObserver(Printer o);
-    void notifyObs();
+    void notifyObs() throws TooManyRecords;
 }
