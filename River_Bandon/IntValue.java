@@ -11,7 +11,7 @@ public class IntValue implements Observable {
         return data;
     }
 
-    public void setValue(int new_data) {
+    public void setValue(int new_data) throws TooManyRecords{
         data = new_data;
         notifyObs();
 
@@ -20,7 +20,8 @@ public class IntValue implements Observable {
     public void registerObserver(Printer o) {
         obs = o;
     }
-    public void notifyObs() {
-        obs.display(getValue());
+    @Override
+    public void notifyObs() throws TooManyRecords{
+        obs.update(getValue());
     }
 }
