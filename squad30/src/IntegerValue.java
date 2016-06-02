@@ -8,7 +8,7 @@ public class IntegerValue implements Observable {
 
     private int value;
 
-    public void setValue( int val )
+    public void setValue( int val ) throws TooManyRecords
     {
         value = val;
         notifyObserver();
@@ -20,7 +20,7 @@ public class IntegerValue implements Observable {
     }
 
     @Override
-    public void notifyObserver() {
+    public void notifyObserver() throws TooManyRecords {
         observer.update(this.getValue());
     }
 
