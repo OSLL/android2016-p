@@ -9,8 +9,12 @@ public class IntValue{
         printer = p;
     }
 
-    void notifyObserver() {
-        printer.display(getValue());
+    void notifyObserver() throws TooManyRecords {
+            printer.add(getValue());
+
+
+
+
     }
 
     IntValue() {
@@ -18,7 +22,7 @@ public class IntValue{
         registerObserver(p);
     }
 
-    void setValue(int val) {
+    void setValue(int val) throws TooManyRecords{
         data = val;
         notifyObserver();
 }
