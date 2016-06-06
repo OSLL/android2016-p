@@ -14,6 +14,8 @@ public class Figurs {
     float center_x, center_y;
     float s = 1.5f;
 
+
+
     public Figurs() {
         just4color = new Paint();
         just4color.setColor(Color.BLUE);
@@ -63,6 +65,7 @@ public class Figurs {
         canvas.rotate(90, center_x, center_y);
         //конец отрисовки круга из блоков
     }
+
 
 
     public void DrawBlock(Canvas canvas)

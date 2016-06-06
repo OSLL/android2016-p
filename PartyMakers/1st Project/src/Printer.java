@@ -1,7 +1,7 @@
 /**
  * Created by user on 6/1/2016.
  */
-public class Printer implements Observer{
+public class Printer implements Observer {
     private int value;
     private IntegerValue OldValue;
     public static int CONST = 1;
