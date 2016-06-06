@@ -6,11 +6,11 @@ public class Start {
         Value value = new Value();
         Printer currentDisplay = new Printer(value);
         try{
-            value.setMeasurements(13);
-            value.setMeasurements(55);
-            value.setMeasurements(12);
-            value.setMeasurements(15);
-            value.setMeasurements(14);
+            value.setValue(13);
+            value.setValue(55);
+            value.setValue(12);
+            value.setValue(15);
+            value.setValue(14);
         } catch (TooManyRecords e){
             System.out.println("Пойман");
         }
@@ -31,7 +31,7 @@ interface Observable {
 
 class Value implements Observable {
     private Observer observer;
-    private int temperature;
+    private int value;
 
     @Override
     public void registerObserver(Observer o) {
@@ -39,11 +39,11 @@ class Value implements Observable {
     }
     @Override
     public void notifyObservers() throws TooManyRecords {
-        observer.check(temperature);
+        observer.check(value);
     }
 
-    public void setMeasurements(int temperature) throws TooManyRecords {
-        this.temperature = temperature;
+    public void setValue(int temperature) throws TooManyRecords {
+        this.value = temperature;
         notifyObservers();
     }
 }
@@ -51,7 +51,7 @@ class Value implements Observable {
 class Printer implements Observer {
     int max = 4;
     ArrayList<Integer> allValue = new ArrayList<>();
-    private int temperature;
+    private int value;
     private Value value;
 
     public Printer(Value value) {
@@ -59,14 +59,14 @@ class Printer implements Observer {
         value.registerObserver(this);
     }
     @Override
-    public void check(int temperature) throws TooManyRecords {
-        if (this.temperature != temperature) {
-            this.temperature = temperature;
+    public void check(int val) throws TooManyRecords {
+        if (this.value != val) {
+            this.value = val;
             if (allValue.size() > max - 1 ) {
                 System.out.println(allValue);
                 throw new TooManyRecords(max);
             }
-            allValue.add(temperature);
+            allValue.add(val);
             System.out.println(allValue);
             System.out.println(allValue.size());
             display();
@@ -74,7 +74,7 @@ class Printer implements Observer {
     }
 
     public void display() {
-        System.out.println("Значение изменилось " + temperature);
+        System.out.println("Значение изменилось " + value);
     }
 
 
