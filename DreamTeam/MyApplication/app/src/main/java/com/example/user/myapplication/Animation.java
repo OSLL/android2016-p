@@ -7,12 +7,12 @@ import android.graphics.Canvas;
  */
 public class Animation {
     static final float TIME_FOR_ROTATE = 9000000f;
-    public static void drawRotatedKrug(Canvas canvas, float time, Figurs figurs)
+    public static void drawRotatedKrug(Canvas canvas, float time, Figurs figurs, float s, float x, float y, int where)
     {
         canvas.save();
 
-        canvas.rotate(time / TIME_FOR_ROTATE, canvas.getWidth()/2, canvas.getHeight()/2);
-        figurs.DrawKrug(canvas);
+        canvas.rotate(where * time / TIME_FOR_ROTATE, x, y);
+        figurs.DrawKrug(canvas, s, x, y);
         canvas.restore();
     }
 

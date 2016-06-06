@@ -77,8 +77,8 @@ class DrawThread extends Thread{
 
                     Figurs f = new Figurs();
 
-                    Animation.drawRotatedKrug(canvas, time, f);
-
+                    Animation.drawRotatedKrug(canvas, time, f, 1.5f, canvas.getWidth()/4, canvas.getHeight()/4, 1);
+                    Animation.drawRotatedKrug(canvas, time, f, 1.5f, canvas.getWidth()/2, canvas.getHeight()/2, -1);
                     figurses.add(f);
                     mBall.drawBall(canvas, getCurrentTime(time));
                     mBall.update(figurses);
