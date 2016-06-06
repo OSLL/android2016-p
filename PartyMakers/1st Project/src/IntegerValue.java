@@ -10,7 +10,7 @@ public class IntegerValue implements Observable {
     }
 
     public void setValue(int newValue) {
-        value=newValue;
+        value = newValue;
         notifyObservers();
     }
 
