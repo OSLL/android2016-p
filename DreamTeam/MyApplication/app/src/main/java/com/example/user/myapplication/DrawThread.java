@@ -70,7 +70,7 @@ class DrawThread extends Thread{
                 synchronized (surfaceHolder)
                 {
                     canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
+                    time = System.nanoTime();
                     if(!ifmore)
                     {
                         mBall = new Ball(new Vector2d((float)canvas.getHeight()/2, (float)400), Color.RED);
@@ -78,18 +78,8 @@ class DrawThread extends Thread{
                         ifmore = true;
                     }
 
-                    Figurs f = new Figurs();
-                    canvas.drawColor(Color.RED);
-                    //Animation.drawRotatedKrug(canvas, time, f, 1.5f, canvas.getWidth()/4, canvas.getHeight()/4, 1);
-                    //Animation.drawRotatedKrug(canvas, time, f, 1.5f, canvas.getWidth()/2, canvas.getHeight()/2, -1);
-                    figurses.add(f);
-
-                    mBall.drawBall(canvas, getCurrentTime(time));
-                    mBall.update(figurses);
-                    Paint paint = new Paint();
-                    paint.setColor(Color.RED);
-                    canvas.drawPoint(100, 100, paint);
-                    Log.d("COLOR", mBall.getNearColor()+"");
+                    FObj krug = new FObj(0, 300, 300, 0, 0, 1.5f);
+                    krug.draw(canvas, getCurrentTime(time));
 
 
 
