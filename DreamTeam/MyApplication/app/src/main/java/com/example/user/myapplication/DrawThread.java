@@ -64,6 +64,9 @@ class DrawThread extends Thread{
                 ArrayList<Figurs> figurses = new ArrayList<>();
                 float time = System.nanoTime();
                 canvas = surfaceHolder.lockCanvas(null);
+                //DrawingView.currentDrawingView.
+
+
                 synchronized (surfaceHolder)
                 {
                     canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
@@ -76,12 +79,18 @@ class DrawThread extends Thread{
                     }
 
                     Figurs f = new Figurs();
-
-                    Animation.drawRotatedKrug(canvas, time, f, 1.5f, canvas.getWidth()/4, canvas.getHeight()/4, 1);
-                    Animation.drawRotatedKrug(canvas, time, f, 1.5f, canvas.getWidth()/2, canvas.getHeight()/2, -1);
+                    canvas.drawColor(Color.RED);
+                    //Animation.drawRotatedKrug(canvas, time, f, 1.5f, canvas.getWidth()/4, canvas.getHeight()/4, 1);
+                    //Animation.drawRotatedKrug(canvas, time, f, 1.5f, canvas.getWidth()/2, canvas.getHeight()/2, -1);
                     figurses.add(f);
+
                     mBall.drawBall(canvas, getCurrentTime(time));
                     mBall.update(figurses);
+                    Paint paint = new Paint();
+                    paint.setColor(Color.RED);
+                    canvas.drawPoint(100, 100, paint);
+                    Log.d("COLOR", mBall.getNearColor()+"");
+
 
 
                 }

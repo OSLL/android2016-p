@@ -1,9 +1,11 @@
 package com.example.user.myapplication;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -48,6 +50,23 @@ public class Ball {
     void update(ArrayList<Figurs> figurses)
     {
         ;
+    }
+
+    public static Bitmap loadBitmapFromView(View v) {
+        Bitmap b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
+        v.draw(c);
+        return b;
+    }
+
+    int getNearColor()
+    {
+        DrawingView.getCurrentDrawingView().buildDrawingCache();
+        return DrawingView.getCurrentDrawingView().getDrawingCache().getPixel(100, 100);
+
+        //DrawingView.currentDrawingView.buildDrawingCache();
+        //return DrawingView.currentDrawingView.getDrawingCache(true).getPixel(100, 140);
     }
 
     void setA(int a)
