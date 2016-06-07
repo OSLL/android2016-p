@@ -94,27 +94,23 @@ public class Figurs {
         canvas.drawRect(myRect, paint);
     }
 
-    public void DrawTriangle(Canvas canvas,int center_x, int center_y) {
+    public void DrawTriangle(Canvas canvas,int center_x, int center_y, float R) {
         int w = 0, h = 0;
 
         boolean fl1 = false;
-        if (!fl1) {
-            w = canvas.getWidth()/ 4;
-            h = canvas.getHeight()/ 60;
-            fl1 = true;
-        }
+
         Paint paint = new Paint();
         paint.setStrokeWidth(40);
         just4color.setColor(Color.parseColor("#F99B15"));
         paint.setColor(just4color.getColor());
         //paint.setStyle(Paint.Style.FILL); // заливаем
-        canvas.drawLine(w, center_y + w / 1.73205f, center_x, center_y - 2 * w / 1.73f, paint);
+        canvas.drawLine(center_x-R * 0.866f, center_y - R/2f, center_x, center_y - R, paint);
         just4color.setColor(Color.parseColor("#0B0C93"));
         paint.setColor(just4color.getColor());
-        canvas.drawLine(center_x, center_y - 2 * w / 1.73f, 3 * w, center_y + w / 1.73205f, paint);
+        canvas.drawLine(center_x, center_y - R,center_x + R * 0.866f, center_y + R/2f, paint);
         just4color.setColor(Color.parseColor("#0BE51F"));
         paint.setColor(just4color.getColor());
-        canvas.drawLine(w, center_y + w / 1.73205f, 3 * w, center_y + w / 1.73205f, paint);
+        canvas.drawLine(center_x + R * 0.866f, center_y + R/2f, center_x-R * 0.866f, center_y - R/2f, paint);
     }
 
     public void DrawSquare(Canvas canvas, int center_x, int center_y ) {
