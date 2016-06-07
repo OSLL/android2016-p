@@ -21,20 +21,21 @@ import java.util.ArrayList;
  * Created by user on 6/3/2016.
  */
 class DrawThread extends Thread{
-    private boolean runFlag = false;
-    double speed_a = 0.1;
+    private boolean       runFlag = false;
+    double                speed_a = 0.1;
     private SurfaceHolder surfaceHolder;
-    private Bitmap picture;
-    private Matrix matrix;
-    private long prevTime;
-    private DrawingView dView;
-    private float x=100, y=100;
+    private Bitmap        picture;
+    private Matrix        matrix;
+    private long          prevTime;
+    private DrawingView   dView;
+    private float         x=100, y=100;
+    private Ball          mBall;
+
     public DrawThread(SurfaceHolder surfaceHolder, DrawingView dView){
         this.surfaceHolder = surfaceHolder;
         this.dView = dView;
     }
 
-    Ball mBall;
 
     public void setRunning(boolean run) {
         runFlag = run;
@@ -46,43 +47,32 @@ class DrawThread extends Thread{
            mBall.speed = -15;
         }
     }
-
     float getCurrentTime(float lastTime)
     {
         return (System.nanoTime() - lastTime) / 100f;
     }
-
-
     @Override
     public void run() {
         Canvas canvas = null;
         boolean ifmore = false;
-
-
+        float time = System.nanoTime();
         while (runFlag) {
             try {
                 ArrayList<Figurs> figurses = new ArrayList<>();
-                float time = System.nanoTime();
                 canvas = surfaceHolder.lockCanvas(null);
-                //DrawingView.currentDrawingView.
-
-
                 synchronized (surfaceHolder)
                 {
                     canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-                    time = System.nanoTime();
                     if(!ifmore)
                     {
                         mBall = new Ball(new Vector2d((float)canvas.getHeight()/2, (float)400), Color.RED);
                         mBall.pos = new Vector2d(canvas.getWidth()/2, 0);
                         ifmore = true;
                     }
-
                     FObj krug = new FObj(0, 300, 300, 0, 0, 1.5f);
-                    krug.draw(canvas, getCurrentTime(time));
-
-
-
+                    FObj krug2 = new FObj(0, 500, 500, 0, 0, 1.5f);
+                    krug.draw(canvas, getCurrentTime(time), 1);
+                    krug2.draw(canvas, getCurrentTime(time), -1);
                 }
             }catch (NullPointerException e){
                 e.printStackTrace();

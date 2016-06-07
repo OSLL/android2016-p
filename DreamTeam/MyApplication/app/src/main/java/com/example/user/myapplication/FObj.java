@@ -2,10 +2,8 @@ package com.example.user.myapplication;
 
 import android.graphics.Canvas;
 
-/**
- * Created by user on 6/7/2016.
- */
-public class FObj {
+    public class FObj {
+    static final float TIME_FOR_ROTATE = 9000000f;
     private Canvas c;
     float Center_x, Center_y, Width, Height;
     int id;
@@ -20,10 +18,12 @@ public class FObj {
         this.s = s;
 
     }
-    public void draw(Canvas c, float Time)
+    public void draw(Canvas c, float time, int where)
     {
         Figurs f = new Figurs();
         c.save();
+        float angle = 30 * time / TIME_FOR_ROTATE;
+        c.rotate(angle * where, Center_x, Center_y);
 
         switch(id)
         {
@@ -45,10 +45,11 @@ public class FObj {
             case 5:
                 f.DrawOval(c,(int)Center_x, (int)Center_y);
                 break;
-            /*case 6:
+            case 6:
                 f.DrawStar(c,(int)Center_x, (int)Center_y);
-                break;*/
+                break;
         }
+        c.restore();
 
     }
 
