@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">WIFIChat</string>
+    <string name="app_name">WI-FI Chat</string>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
