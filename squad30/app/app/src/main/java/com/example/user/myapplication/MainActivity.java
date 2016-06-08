@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.FloatingActionButton;
 
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -33,14 +35,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FloatingActionButton myFab = (FloatingActionButton)findViewById(R.id.myFAB);
+        myFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ;
+            }
+        });
+
 
         tex = (TextView) findViewById(R.id.textView);
+
         m = this;
 
         //new myC().execute("http://www.pictaculous.com/api/1.0/");
         AsyncUploadPhoto asyncUploadPhoto = new AsyncUploadPhoto();
         asyncUploadPhoto.setMainActivity(m);
-        asyncUploadPhoto.execute("http://172.31.0.83/test.php");
+        asyncUploadPhoto.execute("http://62.213.86.130/api-s/api.php");
+        // asyncUploadPhoto.execute("http://192.168.1.100/pictest.php");
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.

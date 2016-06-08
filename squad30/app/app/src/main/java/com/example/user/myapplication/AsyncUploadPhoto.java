@@ -1,9 +1,11 @@
 package com.example.user.myapplication;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -17,6 +19,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.jar.Manifest;
 
 /**
  * Created by user on 6/8/2016.
@@ -35,6 +38,13 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
         m.tex.setText(m.res);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        m.verifyStoragePermissions(m);
+        System.out.println("Ok");
     }
 
     public void setMainActivity(MainActivity mainActivity) {
