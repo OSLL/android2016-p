@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">App</string>
+    <string name="begin_game">Начать игру</string>
+    <string name="user_name">Первый игрок</string>
+    <string name="vvod">Далее</string>
+    <string name="user_name1">Второй игрок</string>
+    <string name="hint">имя</string>
+</resources>

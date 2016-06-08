@@ -22,7 +22,6 @@ public class Client extends Activity{
             _socket = new Socket(_ip, _port);
             in = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(_socket.getOutputStream(), "UTF-8"));
-            messages = (AutoCompleteTextView)findViewById(R.id.MessagesList);
             run();
         } catch (IOException e) {
             e.printStackTrace();
