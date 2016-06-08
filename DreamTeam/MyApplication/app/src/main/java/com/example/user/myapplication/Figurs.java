@@ -58,24 +58,24 @@ public class Figurs {
     }
 
 
-    public void DrawBlock(Canvas canvas, int center_x, int center_y) {
-        int w = 0, h = 0;
+    public void DrawBlock(Canvas canvas, int center_x, int center_y, String Colour) {
+        int a = 0, b = 0;
         boolean fl1 = false;
         if (!fl1) {
-            w = canvas.getWidth()/3;
-            h = canvas.getHeight()/ 95;
+            a = canvas.getWidth()/3;
+            b = canvas.getHeight()/ 95;
             fl1 = true;
         }
         // первый прямоугольник
         Rect myRect = new Rect();
-        myRect.set(0, center_y - h / 2, w, h + center_y);
+        myRect.set(center_x - a/2, center_y - b/2, center_x + a/2,  center_y + b/2);
         Paint paint = new Paint();
-        just4color.setColor(Color.parseColor("#F99B15"));
+        just4color.setColor(Color.parseColor(Colour));
         paint.setColor(just4color.getColor());
         paint.setStyle(Paint.Style.FILL); // заливаем
         canvas.drawRect(myRect, paint);
         //второй прямоугольник
-        just4color.setColor(Color.parseColor("#F60E65"));
+       /* just4color.setColor(Color.parseColor("#F60E65"));
         paint.setColor(just4color.getColor());
         paint.setStyle(Paint.Style.FILL);
         myRect.set(w, center_y - h / 2, 2 * w, h + center_y);
@@ -91,10 +91,10 @@ public class Figurs {
         paint.setColor(just4color.getColor());
         paint.setStyle(Paint.Style.FILL);
         myRect.set(3 * w, center_y - h / 2, 4 * w, h + center_y);
-        canvas.drawRect(myRect, paint);
+        canvas.drawRect(myRect, paint);*/
     }
 
-    public void DrawTriangle(Canvas canvas,int center_x, int center_y, float R) {
+    public void DrawTriangle(Canvas canvas,int center_x, int center_y, float R, String Colour1, String Colour2, String Colour3) {
         int w = 0, h = 0;
 
         boolean fl1 = false;
@@ -105,14 +105,14 @@ public class Figurs {
         }
         Paint paint = new Paint();
         paint.setStrokeWidth(R/10f);
-        just4color.setColor(Color.parseColor("#F99B15"));
+        just4color.setColor(Color.parseColor(Colour1));
         paint.setColor(just4color.getColor());
         canvas.drawLine(center_x-R*0.86f, center_y + R/2f, center_x, center_y -R, paint);
-        just4color.setColor(Color.parseColor("#0B0C93"));
+        just4color.setColor(Color.parseColor(Colour2));
         paint.setColor(just4color.getColor());
         canvas.drawLine(center_x, center_y -R, center_x+R*0.866f, center_y + R/2f, paint);
 
-        just4color.setColor(Color.parseColor("#0BE51F"));
+        just4color.setColor(Color.parseColor(Colour3));
         paint.setColor(just4color.getColor());
         canvas.drawLine( center_x+R*0.866f, center_y + R/2f,center_x-R*0.86f, center_y + R/2f, paint);
         //красивые кружки
@@ -123,7 +123,7 @@ public class Figurs {
     }
 
 
-    public void DrawSquare(Canvas canvas, int center_x, int center_y ) {
+    public void DrawSquare(Canvas canvas, int center_x, int center_y, float R ) {
         int w = 0, h = 0;
 
         boolean fl1 = false;
@@ -134,25 +134,25 @@ public class Figurs {
         }
         //canvas.scale(1.5f, 1.5f);
         Paint paint = new Paint();
-        paint.setStrokeWidth(40);
+        paint.setStrokeWidth(R/10f);
         just4color.setColor(Color.parseColor("#F99B15"));
         paint.setColor(just4color.getColor());
         paint.setStyle(Paint.Style.FILL); // заливаем
-        canvas.drawLine(w, center_y + w / 1.73205f, w, center_y - 2 * w / 1.73f, paint);
+        canvas.drawLine(center_x - 1.414f*R/2f, center_y + 1.414f*R/2f,center_x - 1.414f*R/2f, center_y - 1.414f*R/2f, paint);
         just4color.setColor(Color.parseColor("#0B0C93"));
         paint.setColor(just4color.getColor());
-        canvas.drawLine(3 * w, center_y - 2 * w / 1.73f, 3 * w, center_y + w / 1.73205f, paint);
+        canvas.drawLine(center_x - 1.414f*R/2f, center_y - 1.414f*R/2f,center_x + 1.414f*R/2f, center_y - 1.414f*R/2f, paint);
         just4color.setColor(Color.parseColor("#0BE51F"));
         paint.setColor(just4color.getColor());
-        canvas.drawLine(w, center_y + w / 1.73205f, 3 * w, center_y + w / 1.73205f, paint);
+        canvas.drawLine(center_x + 1.414f*R/2f, center_y - 1.414f*R/2f,center_x + 1.414f*R/2f, center_y + 1.414f*R/2f, paint);
         just4color.setColor(Color.parseColor("#F60E65"));
         paint.setColor(just4color.getColor());
-        canvas.drawLine(w, center_y - 2 * w / 1.73f, 3 * w, center_y - 2 * w / 1.73f, paint);
+        canvas.drawLine(center_x + 1.414f*R/2f, center_y + 1.414f*R/2f,center_x - 1.414f*R/2f, center_y + 1.414f*R/2f, paint);
         //красивые кружки
-        DrawKrug(canvas, 0.4f, w, center_y + w / 1.73205f, false);
-        DrawKrug(canvas, 0.4f, w, center_y - 2 * w / 1.73f, false);
-        DrawKrug(canvas, 0.4f, 3 * w, center_y + w / 1.73205f, false);
-        DrawKrug(canvas, 0.4f, 3 * w, center_y - 2 * w / 1.73f, false);
+        DrawKrug(canvas, R/800f,center_x - 1.414f*R/2f, center_y + 1.414f*R/2f, false);
+        DrawKrug(canvas, R/800f,center_x - 1.414f*R/2f, center_y - 1.414f*R/2f, false);
+        DrawKrug(canvas, R/800f,center_x + 1.414f*R/2f, center_y + 1.414f*R/2f, false);
+        DrawKrug(canvas, R/800f,center_x + 1.414f*R/2f, center_y - 1.414f*R/2f, false);
     }
 
 
@@ -194,41 +194,29 @@ public class Figurs {
         //красивый кружок
         DrawKrug(canvas, 0.5f, center_x, center_y, false);
     }
-    public void DrawRomb(Canvas canvas, int center_x, int center_y) {
-        int w = 0, h = 0;
+    public void DrawRomb(Canvas canvas, int center_x, int center_y, float R) {
 
-        boolean fl1 = false;
-        {
-        w = canvas.getWidth()/ 4;
-        h = canvas.getHeight()/ 60;
-            fl1 = true;
-        }
         Paint paint = new Paint();
-        paint.setStrokeWidth(40);
-        canvas.translate(0, -w/1.73205f);
+        paint.setStrokeWidth(R/10f);
+
         just4color.setColor(Color.parseColor("#F99B15"));
         paint.setColor(just4color.getColor());
-        canvas.drawLine(w, center_y + w / 1.73205f, center_x, center_y - 2 * w / 1.73f, paint);
-
+        canvas.drawLine(center_x - 1.73f*R, center_y, center_x, center_y - R, paint);
         just4color.setColor(Color.parseColor("#0B0C93"));
         paint.setColor(just4color.getColor());
-        canvas.drawLine(center_x, center_y - 2 * w / 1.73f, 3 * w, center_y + w / 1.73205f, paint);
-        canvas.translate(0, 2*w/1.73205f);
-        canvas.rotate(180, center_x, center_y);
+        canvas.drawLine(center_x, center_y -R, center_x + 1.73f*R, center_y, paint);
         just4color.setColor(Color.parseColor("#0BE51F"));
         paint.setColor(just4color.getColor());
-        canvas.drawLine(w, center_y + w / 1.73205f, center_x, center_y - 2 * w / 1.73f, paint);
-
+        canvas.drawLine(center_x + 1.73f*R, center_y, center_x,center_y + R, paint);
         just4color.setColor(Color.parseColor("#F60E65"));
         paint.setColor(just4color.getColor());
-        canvas.drawLine(center_x, center_y - 2 * w / 1.73f, 3 * w, center_y + w / 1.73205f, paint);
+        canvas.drawLine( center_x,center_y + R,center_x - 1.73f*R, center_y, paint);
+
         //красивые кружки
-        DrawKrug(canvas, 0.4f, 3 * w, center_y + w / 1.73205f, false);
-        DrawKrug(canvas, 0.4f, w, center_y + w / 1.73205f, false);
-        DrawKrug(canvas, 0.4f, center_x, center_y - 2 * w / 1.73205f, false);
-        canvas.translate(0, 2*w/1.73205f);
-        canvas.rotate(180, center_x, center_y);
-        DrawKrug(canvas, 0.4f, center_x, center_y - 2 * w / 1.73f, false);
+        DrawKrug(canvas, R/800f, center_x - 1.73f*R, center_y, false);
+        DrawKrug(canvas, R/800f,center_x, center_y - R, false);
+        DrawKrug(canvas, R/800f, center_x + 1.73f*R, center_y, false);
+        DrawKrug(canvas, R/800f, center_x,center_y + R, false);
 
     }
     public void DrawStar(Canvas canvas, int center_x, int center_y) {
