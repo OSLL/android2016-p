@@ -7,9 +7,11 @@ import android.view.*;
 import android.widget.*;
 import android.widget.TabHost;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -37,15 +39,17 @@ public class MainActivity extends AppCompatActivity {
         final EditText ClientPort = (EditText)findViewById(R.id.ClientPort);
         final EditText ServerName = (EditText)findViewById(R.id.ServerNickName);
 
-        Button startServer = (Button)findViewById(R.id.StartServerButton);
+        final Button startServer = (Button)findViewById(R.id.StartServerButton);
         startServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ChatData.UserName = ServerName.getText().toString() + ": ";
                 ChatData.ClientIP = ChatData.ServerIP = ServerIP.getText().toString();
-                ChatData.ServerPort = Integer.parseInt(ServerPort.getText().toString());
+                ChatData.ClientPort = ChatData.ServerPort = Integer.parseInt(ServerPort.getText().toString());
                 Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+
                 startActivity(intent);
+
             }
         });
 
@@ -61,5 +65,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
