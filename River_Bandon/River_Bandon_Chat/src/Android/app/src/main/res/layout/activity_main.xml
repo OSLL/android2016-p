@@ -54,7 +54,7 @@
                                     android:id="@+id/ServerPort" android:layout_gravity="center_horizontal"
                                     android:text="8000"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="Ваш NickName:"
+                                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="Ваш Nick Name:"
                                       android:id="@+id/textView7" android:layout_marginTop="20dp"/>
                             <EditText android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ServerNickName"/>
                             <Button
@@ -70,7 +70,7 @@
                                 android:orientation="vertical">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                                       android:textAppearance="?android:attr/textAppearanceLarge"
-                                      android:text="Ваш NickName:" android:id="@+id/textView5"
+                                      android:text="Ваш Nick Name:" android:id="@+id/textView5"
                                       android:layout_marginTop="20dp"/>
                             <EditText android:layout_width="fill_parent" android:layout_height="wrap_content"
                                       android:id="@+id/UserName"/>
