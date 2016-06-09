@@ -29,11 +29,16 @@ public class Ball {
 
     public void drawBall(Canvas canvas, float time)
     {
-
-        speed += acs*time;
-        pos.setY(pos.getY()+speed);
-        if(pos.getY() - radius > canvas.getHeight())
-            pos.setY(canvas.getHeight() - radius);
+        if(up)
+        {
+            speed += acs*time;
+            pos.setY(pos.getY()+speed);
+            if(pos.getY() - radius > canvas.getHeight())
+            {
+                pos.setY(canvas.getHeight() - radius);
+                up = false;
+            }
+        }
         Paint p = new Paint();
         p.setColor(color);
         canvas.drawCircle(pos.getX(), pos.getY(), radius, p);
@@ -47,27 +52,8 @@ public class Ball {
         Log.d("ADD", y+"");
     }
 
-    void update(ArrayList<Figurs> figurses)
-    {
-        ;
-    }
 
-    public static Bitmap loadBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
-        v.draw(c);
-        return b;
-    }
 
-    int getNearColor()
-    {
-        DrawingView.getCurrentDrawingView().buildDrawingCache();
-        return DrawingView.getCurrentDrawingView().getDrawingCache().getPixel(100, 100);
-
-        //DrawingView.currentDrawingView.buildDrawingCache();
-        //return DrawingView.currentDrawingView.getDrawingCache(true).getPixel(100, 140);
-    }
 
     void setA(int a)
     {

@@ -2,7 +2,6 @@ package com.example.user.myapplication;
 
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.util.EventLog;
 import android.util.Log;
@@ -15,7 +14,6 @@ public class DrawingView extends SurfaceView implements SurfaceHolder.Callback {
 
     public static View currentDrawingView;
     MotionEvent event = null;
-    Bitmap res;
 
     void setEvent(MotionEvent event)
     {
@@ -24,12 +22,11 @@ public class DrawingView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     DrawThread drawThread;
-     public DrawingView(Context context, Bitmap res) {
+     public DrawingView(Context context) {
          super(context);
          this.setDrawingCacheEnabled(true);
          getHolder().addCallback(this);
          currentDrawingView = this;
-         this.res = res;
      }
 
      @Override
@@ -47,7 +44,7 @@ public class DrawingView extends SurfaceView implements SurfaceHolder.Callback {
      public void surfaceCreated(SurfaceHolder holder) {
          currentDrawingView = this;
 
-         drawThread = new DrawThread(getHolder(), this, res);
+         drawThread = new DrawThread(getHolder(), this);
          drawThread.setRunning(true);
          drawThread.start();
      }
