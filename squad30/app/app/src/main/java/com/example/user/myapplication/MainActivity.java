@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +28,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tex;
-    MainActivity m;
-    String res = "";
+
     static final int REQUEST_TAKE_PHOTO = 1;
     String mCurrentPhotoPath, imageName;
 
@@ -46,12 +44,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        m.verifyStoragePermissions(this);
+        verifyStoragePermissions(this);
 
         FloatingActionButton myFab = (FloatingActionButton)findViewById(R.id.myFAB);
-        tex = (TextView) findViewById(R.id.textView);
 
-        m = this;
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dispatchTakePictureIntent();
@@ -128,9 +124,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Toast.makeText(this, "onActivityResult", Toast.LENGTH_SHORT).show();
-        AsyncUploadPhoto asyncUploadPhoto = new AsyncUploadPhoto();
-        asyncUploadPhoto.setMainActivity(m);
-        asyncUploadPhoto.execute("http://62.213.86.130/api-s/api.php", imageName, mCurrentPhotoPath);
+        Intent intent = new Intent(getBaseContext(), ResultActivity.class);
+        intent.putExtra("path", mCurrentPhotoPath);
+        intent.putExtra("imageName", imageName);
+        startActivity(intent);
+
     }
 
     @Override

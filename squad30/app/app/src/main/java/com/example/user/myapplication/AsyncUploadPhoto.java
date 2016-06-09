@@ -6,11 +6,17 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.IntentCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.ContentBody;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -26,7 +32,7 @@ import java.util.jar.Manifest;
  */
 public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
 
-    MainActivity m;
+    ResultActivity m;
 
     @Override
     protected Void doInBackground(String... params) {
@@ -37,18 +43,35 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-        m.tex.setText(m.res);
+        try {
+            JSONObject obj = new JSONObject(m.res);
+            String tmp = obj.getJSONObject("info").getString("colors");
+            String[] arr = tmp.replaceAll("\"", "").replaceAll("\\]", "").replaceAll("\\[", "").split(",");
+            m.tex2.setVisibility(View.VISIBLE);
+            m.tex3.setVisibility(View.VISIBLE);
+            for(int i = 0; i < arr.length; i++)
+                m.imgcolors[i].setBackgroundColor((int)Long.parseLong("FF" + arr[i], 16));
+
+            tmp = obj.getJSONArray("cl_themes").getJSONObject(0).getString("colors");
+            arr = tmp.replaceAll("\"", "").replaceAll("\\]", "").replaceAll("\\[", "").split(",");
+            for(int i = 0; i < arr.length; i++)
+                m.suggcolors[i].setBackgroundColor((int)Long.parseLong("FF" + arr[i], 16));
+
+        } catch (JSONException exc) {
+            System.out.println("JSON Exc");
+        }
+
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        m.verifyStoragePermissions(m);
         System.out.println("PreExecute");
     }
 
-    public void setMainActivity(MainActivity mainActivity) {
-        m = mainActivity;
+    public void setResultActivity(ResultActivity resultActivity) {
+        m = resultActivity;
     }
 
     private String readStream(InputStream is) {
