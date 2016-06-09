@@ -3,17 +3,10 @@ package com.example.user.myapplication;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ResultActivity extends AppCompatActivity {
     ResultActivity m;
@@ -22,7 +15,6 @@ public class ResultActivity extends AppCompatActivity {
     ImageView[] imgcolors = new ImageView[6];
     ImageView[] suggcolors = new ImageView[6];
     String res = "";
-    int kk=0;
 
 
     @Override
