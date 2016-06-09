@@ -2,25 +2,37 @@ package com.example.user.myapplication;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.FloatingActionButton;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView tex;
     MainActivity m;
     String res = "";
+    static final int REQUEST_TAKE_PHOTO = 1;
+    String mCurrentPhotoPath, imageName;
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -34,23 +46,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        m.verifyStoragePermissions(this);
 
         FloatingActionButton myFab = (FloatingActionButton)findViewById(R.id.myFAB);
+        tex = (TextView) findViewById(R.id.textView);
+
+        m = this;
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ;
+                dispatchTakePictureIntent();
             }
         });
 
 
-        tex = (TextView) findViewById(R.id.textView);
 
-        m = this;
 
         //new myC().execute("http://www.pictaculous.com/api/1.0/");
-        AsyncUploadPhoto asyncUploadPhoto = new AsyncUploadPhoto();
-        asyncUploadPhoto.setMainActivity(m);
-        asyncUploadPhoto.execute("http://62.213.86.130/api-s/api.php");
+
         // asyncUploadPhoto.execute("http://192.168.1.100/pictest.php");
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -68,6 +80,57 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_EXTERNAL_STORAGE
             );
         }
+    }
+
+    public void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.i("File creating","Error occurred while creating the File");
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                imageName = photoFile.getName();
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                Log.i("File creating", mCurrentPhotoPath);
+            }
+            else {
+                Log.i("File creating","not success");
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Toast.makeText(this, "onActivityResult", Toast.LENGTH_SHORT).show();
+        AsyncUploadPhoto asyncUploadPhoto = new AsyncUploadPhoto();
+        asyncUploadPhoto.setMainActivity(m);
+        asyncUploadPhoto.execute("http://62.213.86.130/api-s/api.php", imageName, mCurrentPhotoPath);
     }
 
     @Override

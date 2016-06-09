@@ -30,7 +30,7 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
-        uploadImage(params[0]);
+        uploadImage(params[0], params[1], params[2]);
         return null;
     }
 
@@ -44,7 +44,7 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         m.verifyStoragePermissions(m);
-        System.out.println("Ok");
+        System.out.println("PreExecute");
     }
 
     public void setMainActivity(MainActivity mainActivity) {
@@ -65,12 +65,11 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
         }
     }
 
-    public void uploadImage(String urlString) {
+    public void uploadImage(String urlString, String filename, String path) {
         try {
-            String filename = "1.png";
             File root = Environment.getExternalStorageDirectory();
-            Bitmap bitmap = BitmapFactory.decodeFile(root+"/" + filename);
-            Log.d("HERE: " , root+"/"+filename);
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            Log.d("HERE: " , path);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             if(filename.toLowerCase().endsWith("jpg") || filename.toLowerCase().endsWith("jpeg"))
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);

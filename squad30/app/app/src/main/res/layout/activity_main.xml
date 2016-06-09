@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text=""
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -19,7 +19,12 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textSize="16sp"
-        android:layout_margin="@dimen/activity_horizontal_margin" />
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_alignBottom="@+id/myFAB"
+        android:scrollIndicators="end"
+        android:textIsSelectable="true" />
 
     <android.support.design.widget.FloatingActionButton
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -37,5 +42,6 @@
         fab:fabSize="normal"
         android:clickable="true"
         android:longClickable="true"
-        android:layout_margin="@dimen/activity_horizontal_margin" />
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_camera_24dp"/>
 </RelativeLayout>
