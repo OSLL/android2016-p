@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="com.example.weller.successapp.OneActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView4"
+        android:src="@drawable/settings"
+        android:scaleType="centerCrop"
+        android:layout_alignTop="@+id/cur_score"
+        android:layout_alignLeft="@+id/button3"
+        android:layout_alignStart="@+id/button3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ИмяЛюбимоеМое"
+        android:id="@+id/textView3"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:layout_below="@+id/cur_score"
+        android:layout_alignRight="@+id/imageView4"
+        android:layout_alignEnd="@+id/imageView4" />
+
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_above="@+id/button3"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_marginBottom="116dp">
+
+        <RadioButton
+            android:id="@+id/var_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp" />
+
+        <RadioButton
+            android:id="@+id/var_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp" />
+
+        <RadioButton
+            android:id="@+id/var_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp" />
+
+        <RadioButton
+            android:id="@+id/var_g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp" />
+
+    </RadioGroup>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Далее"
+        android:id="@+id/button3"
+        android:onClick="onSaveClick"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/imageView3"
+        android:layout_alignStart="@+id/imageView3"
+        android:visibility="visible"
+        android:typeface="serif"
+        android:textSize="30dp"
+        android:background="#7ed2d7"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/0"
+        android:id="@+id/cur_score"
+        android:textIsSelectable="false"
+        android:textSize="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4"
+        android:textColor="#043d3f" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/question"
+        android:text="вопрос"
+        android:textColor="#043d3f"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_marginBottom="46dp"
+        android:layout_above="@+id/radio_group"
+        android:layout_toLeftOf="@+id/textView3"
+        android:layout_toStartOf="@+id/textView3" />
+
+
+</RelativeLayout>
