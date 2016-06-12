@@ -3,8 +3,11 @@ package com.example.user.myapplication;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +26,9 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Colors");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_result);
+
         tex2 = (TextView)findViewById(R.id.textView2);
         tex3 = (TextView)findViewById(R.id.textView3);
         img = (ImageView)findViewById(R.id.imageView);
@@ -55,7 +60,6 @@ public class ResultActivity extends AppCompatActivity {
                 System.out.println("JSON Exc");
             }
 
-
             }
         }); */
 
@@ -71,5 +75,16 @@ public class ResultActivity extends AppCompatActivity {
         AsyncUploadPhoto asyncUploadPhoto = new AsyncUploadPhoto();
         asyncUploadPhoto.setResultActivity(m);
         asyncUploadPhoto.execute("http://62.213.86.130/api-s/api.php", imageName, path);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

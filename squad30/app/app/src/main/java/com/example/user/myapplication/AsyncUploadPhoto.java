@@ -44,6 +44,7 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
     protected void onPostExecute(Void result) {
         super.onPostExecute(result); // put to new another function
         try {
+            // TODO: all palettes !!!
             JSONObject obj = new JSONObject(m.res);
             String tmp = obj.getJSONObject("info").getString("colors");
             String[] arr = tmp.replaceAll("\"", "").replaceAll("\\]", "").replaceAll("\\[", "").split(",");
@@ -61,8 +62,6 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
         } catch (JSONException exc) {
             System.out.println("JSON Exc");
         }
-
-
     }
 
     @Override

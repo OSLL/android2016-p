@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Palette</string>
     <string name="title_activity_result">Your colors</string>
+    <string name="about">About</string>
+
+    <string-array name="dialog">
+        <item>Choose from gallery</item>
+        <item>Capture</item>
+    </string-array>
+    <string name="title_activity_about">AboutActivity</string>
 </resources>
