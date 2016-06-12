@@ -6,11 +6,13 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ResultActivity extends AppCompatActivity {
     ResultActivity m;
     TextView tex2, tex3;
+    ProgressBar progressBar;
     ImageView img;
     ImageView[] imgcolors = new ImageView[6];
     ImageView[] suggcolors = new ImageView[6];
@@ -25,6 +27,7 @@ public class ResultActivity extends AppCompatActivity {
         tex2 = (TextView)findViewById(R.id.textView2);
         tex3 = (TextView)findViewById(R.id.textView3);
         img = (ImageView)findViewById(R.id.imageView);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
 
         imgcolors[0] = (ImageView)findViewById(R.id.imageView2);
         imgcolors[1] = (ImageView)findViewById(R.id.imageView3);

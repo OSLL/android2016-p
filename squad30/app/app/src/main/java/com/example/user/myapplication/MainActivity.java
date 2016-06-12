@@ -122,10 +122,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Toast.makeText(this, "onActivityResult", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getBaseContext(), ResultActivity.class);
-        intent.putExtra("path", mCurrentPhotoPath);
-        intent.putExtra("imageName", imageName);
-        startActivity(intent);
+        if(resultCode != 0) {
+            Intent intent = new Intent(getBaseContext(), ResultActivity.class);
+            intent.putExtra("path", mCurrentPhotoPath);
+            intent.putExtra("imageName", imageName);
+            startActivity(intent);
+        }
 
     }
 
