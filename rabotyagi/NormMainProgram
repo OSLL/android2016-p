@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainProgram {
+    public static void main(String[] args) {
+        IntegerValue integervalue = new IntegerValue();
+
+        Printer printer = new Printer(integervalue);
+        integervalue.setValues(6);
+        integervalue.setValues(6);
+        integervalue.setValues(45);
+            }
+}
+
+interface Observer {
+    void update (int value);
+}
+
+interface Observable {
+    void registerObserver(Observer o);
+    void removeObserver(Observer o);
+    void notifyObservers();
+}
+
+class IntegerValue implements Observable {
+    private ArrayList<Observer> observers;
+    private int value;
+    
+    public IntegerValue() {
+        observers = new ArrayList<Observer>();
+    }
+    
+    public void registerObserver(Observer o) {
+        observers.add(o);
+    }
+
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    public void notifyObservers() {
+        for (Observer observer : observers)
+            observer.update(value);
+    }
+         
+    public void setValues(int value) {
+    	if (value != this.value)
+    	{
+    		this.value = value;
+            notifyObservers();
+    	}
+    }
+}
+
+class Printer implements Observer {
+    private int value;
+    private IntegerValue integervalue;
+    
+    public Printer(IntegerValue integervalue) {
+        this.integervalue = integervalue;
+        integervalue.registerObserver(this);
+    }
+    
+
+    public void update(int value) {
+        this.value = value;
+                display();
+    }
+
+    public void display() {
+        System.out.println(value);
+    }
+}
