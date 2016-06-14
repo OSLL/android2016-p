@@ -42,11 +42,13 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        super.onPostExecute(result);
+        super.onPostExecute(result); // put to new another function
         try {
+            // TODO: all palettes !!!
             JSONObject obj = new JSONObject(m.res);
             String tmp = obj.getJSONObject("info").getString("colors");
             String[] arr = tmp.replaceAll("\"", "").replaceAll("\\]", "").replaceAll("\\[", "").split(",");
+            m.progressBar.setVisibility(View.INVISIBLE);
             m.tex2.setVisibility(View.VISIBLE);
             m.tex3.setVisibility(View.VISIBLE);
             for(int i = 0; i < arr.length; i++)
@@ -60,8 +62,6 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
         } catch (JSONException exc) {
             System.out.println("JSON Exc");
         }
-
-
     }
 
     @Override
@@ -92,7 +92,7 @@ public class AsyncUploadPhoto extends AsyncTask<String, String, Void> {
         try {
             File root = Environment.getExternalStorageDirectory();
             Bitmap bitmap = BitmapFactory.decodeFile(path);
-            Log.d("HERE: " , path);
+            (new File(path)).delete();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             if(filename.toLowerCase().endsWith("jpg") || filename.toLowerCase().endsWith("jpeg"))
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);

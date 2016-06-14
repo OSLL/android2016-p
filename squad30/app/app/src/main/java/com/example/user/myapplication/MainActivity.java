@@ -2,6 +2,8 @@ package com.example.user.myapplication;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,9 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.FloatingActionButton;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     static final int REQUEST_TAKE_PHOTO = 1;
+    static final int REQUEST_PICK_IMAGE = 2;
     String mCurrentPhotoPath, imageName;
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -46,24 +49,51 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         verifyStoragePermissions(this);
 
-        FloatingActionButton myFab = (FloatingActionButton)findViewById(R.id.myFAB);
+        FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.myFAB);
 
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setItems(R.array.dialog, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == 1)
+                                    dispatchTakePictureIntent();
+                                else {
+                                    Intent intent = new Intent();
+                                    intent.setType("image/*");
+                                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_PICK_IMAGE);
+                                }
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
-
-
-
-
-        //new myC().execute("http://www.pictaculous.com/api/1.0/");
-
-        // asyncUploadPhoto.execute("http://192.168.1.100/pictest.php");
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);//Menu Resource, Menu
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                System.out.println("About menu");
+                Intent i = new Intent(getBaseContext(), AboutActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public static void verifyStoragePermissions(Activity activity) {
@@ -80,17 +110,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                // Error occurred while creating the File
-                Log.i("File creating","Error occurred while creating the File");
+                Log.i("File creating", "Error occurred while creating the File");
             }
-            // Continue only if the File was successfully created
             if (photoFile != null) {
                 imageName = photoFile.getName();
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
@@ -105,29 +131,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Toast.makeText(this, "onActivityResult", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getBaseContext(), ResultActivity.class);
-        intent.putExtra("path", mCurrentPhotoPath);
-        intent.putExtra("imageName", imageName);
-        startActivity(intent);
+
+        if(resultCode == Activity.RESULT_OK) {
+            if(requestCode == REQUEST_TAKE_PHOTO) {
+                Intent intent = new Intent(getBaseContext(), ResultActivity.class);
+                intent.putExtra("path", mCurrentPhotoPath);
+                intent.putExtra("imageName", imageName);
+                startActivity(intent);
+            }
+
+            if(requestCode == REQUEST_PICK_IMAGE) {
+               // TODO: easy to guess what to do
+            }
+        }
 
     }
 
