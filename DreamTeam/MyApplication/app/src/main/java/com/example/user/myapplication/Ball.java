@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * Created by user on 6/3/2016.
  */
 public class Ball {
+    public float delta = 0;
     float speed = 0;
     int radius = 20;
     Vector2d pos;
@@ -31,7 +32,9 @@ public class Ball {
     {
         if(up)
         {
+
             speed += acs*time;
+            delta = speed;
             pos.setY(pos.getY()+speed);
             if(pos.getY() - radius > canvas.getHeight())
             {

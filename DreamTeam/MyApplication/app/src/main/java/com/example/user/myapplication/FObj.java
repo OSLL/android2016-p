@@ -1,9 +1,7 @@
 package com.example.user.myapplication;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +9,6 @@ import java.util.HashMap;
 public class FObj {
     static final float TIME_FOR_ROTATE = 9000000f;
     final float rotateSpeed = 50;
-    private Canvas c;
     float Center_x, Center_y, Width, Height;
     int id;
     float radius;
@@ -34,10 +31,56 @@ public class FObj {
          Height = h;
         this.id = id;
         this.s = s;
-        radius =100*s;
+        if(id == 0)
+            radius =100*s;
+        else radius = h/2;
         ring_wid = radius * 0.1f;
         ball = mBall;
     }
+
+
+    FObj b1, b2, b3, b4;
+    FObj(FObj... p)
+    {
+        Center_x = b1.Center_x ;
+        Center_y = b1.Center_y;
+        b1 = p[0];
+        b2 = p[1];
+        b3 = p[2];
+        b4 = p[3];
+        id = 10;
+    }
+
+    void drawFullB(Canvas c, float time, int where)
+    {
+        c.save();
+        Figurs f = new Figurs();
+        f.DrawBlock(c,(int)b1.Center_x, (int)b1.Center_y, color);
+        f.DrawBlock(c,(int)b2.Center_x, (int)b2.Center_y, color);
+        f.DrawBlock(c,(int)b3.Center_x, (int)b3.Center_y, color);
+        f.DrawBlock(c,(int)b4.Center_x, (int)b4.Center_y, color);
+
+        c.restore();
+    }
+
+    void setFullBY(float y)
+    {
+        b1.Center_y = b2.Center_y = b3.Center_y = b4.Center_y = y;
+    }
+
+    boolean fullBUpdate(Canvas canvas, float time)
+    {
+       return b1.update(canvas, time)&&
+        b2.update(canvas, time)&&
+        b3.update(canvas, time)&&
+        b4.update(canvas, time);
+    }
+
+    public float getRadius()
+    {
+        return radius;
+    }
+
     public void draw(Canvas c, float time, int where)
     {
         this.where = where;
@@ -70,6 +113,7 @@ public class FObj {
             case 6:
                 f.DrawStar(c,(int)Center_x, (int)Center_y);
                 break;
+
         }
         c.restore();
 
@@ -102,6 +146,10 @@ public class FObj {
 
         boolean update(Canvas canvas, float time)
         {
+            if(id == 4 || id == 10)
+            {
+                radius = canvas.getHeight() / 95;
+            }
             Figurs f = new Figurs();
             int ball_color = ball.color;
             switch (id) {
@@ -144,12 +192,10 @@ public class FObj {
 
                     p.setStrokeWidth(20);
 
-                    // p.setColor(Color.RED);
+
                     float left = sectors.get(currentColor).elem1.getX();
                     float right = sectors.get(currentColor).elem2.getX();
-                    //canvas.drawPoint(left,sectors.get(currentColor).elem1.getY(), p);
-                    // p.setColor(Color.BLUE);
-                    //canvas.drawPoint(right ,sectors.get(currentColor).elem2.getY(), p);
+
 
 
                     if (under()) {
