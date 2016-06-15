@@ -8,7 +8,7 @@ public class IntegerValue implements IIntValue
 
     private ArrayList<IPrintable> printers = new ArrayList<>();
 
-    public  IntegerValue(int value)
+    public IntegerValue(int value) throws TooManyRecords
     {
         setValue(value);
     }
@@ -21,7 +21,7 @@ public class IntegerValue implements IIntValue
         return value;
     }
 
-    public void setValue(int value)
+    public void setValue(int value) throws TooManyRecords
     {
         this.value = value;
         Notify();
@@ -37,7 +37,7 @@ public class IntegerValue implements IIntValue
         printers.remove(observer);
     }
 
-    public void  Notify()
+    public void  Notify() throws TooManyRecords
     {
         for (IPrintable observer : printers)
         {

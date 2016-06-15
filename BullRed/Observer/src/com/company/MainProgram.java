@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 interface IPrintable
 {
-    void  Update(IIntValue intValue);
+    void  Update(IIntValue intValue) throws TooManyRecords;
 }
 
 interface IIntValue
@@ -22,17 +22,29 @@ public class MainProgram
         System.out.println("Введите 'exit' для выхода.");
         IntegerValue integerValue = new IntegerValue();
         integerValue.Attach(printer);
-        while (true)
+
+        try
         {
-            String currentString = scanner.next();
-            if (!currentString.equals("exit"))
+            while (true)
             {
-                integerValue.setValue(Integer.parseInt(currentString));
+                String currentString = scanner.next();
+                if (!currentString.equals("exit"))
+                {
+                    integerValue.setValue(Integer.parseInt(currentString));
+                } else
+                {
+                    break;
+                }
             }
-            else
-            {
-                break;
-            }
+        }
+        catch (TooManyRecords error)
+        {
+            System.out.println(error.getMessage());
+            System.out.println("Максимальное количество: " + error.getMaxRecords());
+        }
+        finally
+        {
+            System.out.println("Программа успешна завершена.");
         }
     }
 }
