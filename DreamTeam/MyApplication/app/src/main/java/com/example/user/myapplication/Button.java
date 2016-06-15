@@ -1,22 +1,16 @@
 package com.example.user.myapplication;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
+
 import android.graphics.Canvas;
 
-/**
- * Created by user on 6/8/2016.
- */
+
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 
 public class Button{
     private Paint mPaint = new Paint();
     private Paint m1Paint = new Paint();
-    private Rect mRect = new Rect();
     public int x1;
     public int y1;
     public int x2;
