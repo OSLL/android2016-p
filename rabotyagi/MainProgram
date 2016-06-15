@@ -5,8 +5,8 @@ public class MainProgram {
     public static void main(String[] args) {
         IntegerValue integervalue = new IntegerValue();
 
-        CurrentConditionsDisplay currentDisplay = new CurrentConditionsDisplay(integervalue);
-        integervalue.setValues(745);
+        Printer printer = new Printer(integervalue);
+        integervalue.setValues(6);
         integervalue.setValues(6);
         integervalue.setValues(45);
             }
@@ -44,16 +44,19 @@ class IntegerValue implements Observable {
     }
          
     public void setValues(int value) {
-        this.value = value;
-        notifyObservers();
+    	if (value != this.value)
+    	{
+    		this.value = value;
+            notifyObservers();
+    	}
     }
 }
 
-class CurrentConditionsDisplay implements Observer {
+class Printer implements Observer {
     private int value;
     private IntegerValue integervalue;
     
-    public CurrentConditionsDisplay(IntegerValue integervalue) {
+    public Printer(IntegerValue integervalue) {
         this.integervalue = integervalue;
         integervalue.registerObserver(this);
     }
@@ -61,10 +64,10 @@ class CurrentConditionsDisplay implements Observer {
 
     public void update(int value) {
         this.value = value;
-                Printer();
+                display();
     }
 
-    public void Printer() {
+    public void display() {
         System.out.println(value);
     }
 }
