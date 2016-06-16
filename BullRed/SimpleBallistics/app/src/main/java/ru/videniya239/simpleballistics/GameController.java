@@ -3,31 +3,37 @@ package ru.videniya239.simpleballistics;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
-public class GameController extends SurfaceView
+
+enum GameState
+{
+	PHASE_NEW_GAME,
+	PHASE_PLAY,
+	PHASE_RESULT,
+}
+
+public class GameController extends View
 {
 	public static final int ACTION_MOVE = 1;
 	public static final int ACTION_DOWN = 2;
 	public static final int ACTION_UP = 3;
 	public static final int ACTION_DOUBLE_TAP = 4;
 
-	private static final int PHASE_NEW_GAME = 1;
-	private static final int PHASE_PLAY = 2;
-	private static final int PHASE_RESULT = 3;
-
 	private Activity activity;
-	private int gamePhase;
+	private GameState gamePhase;
 
 	public static float screenHeight;
 	public static float screenWidth;
 	private Paint paint;
-	private Paint textPaint;
+	//private Paint textPaint;
 	
 
     private final int QUIT_KEY = 1;
@@ -37,12 +43,18 @@ public class GameController extends SurfaceView
 	public GameController(Context context)
 	{
 		super(context);
+
+		paint = new Paint();
+		paint.setColor(Color.WHITE);
+		setGamePhase(GameState.PHASE_NEW_GAME);
 	}
 
 	public void Init(int w, int h, int oldw, int oldh)
 	{
 		screenHeight = h;
 		screenWidth = w;
+		/*paint = new Paint();
+		paint.setColor(Color.BLACK);*/
 	}
 
 	public void newGame()
@@ -55,19 +67,19 @@ public class GameController extends SurfaceView
 
 	}
 
-	void setGamePhase(int nextPhase)
+	void setGamePhase(GameState nextPhase)
 	{
 		switch (nextPhase)
 		{
 			case PHASE_NEW_GAME:
-				gamePhase = PHASE_NEW_GAME;
+				gamePhase = GameState.PHASE_NEW_GAME;
 				break;
 			case PHASE_PLAY:
-				gamePhase = PHASE_PLAY;
+				gamePhase = GameState.PHASE_PLAY;
 				newGame();
 				break;
 			case PHASE_RESULT:
-				gamePhase = PHASE_RESULT;
+				gamePhase = GameState.PHASE_RESULT;
 				break;
 		}
 	}
@@ -90,6 +102,7 @@ public class GameController extends SurfaceView
 	@Override
 	protected void onDraw(Canvas canvas)
 	{
+		canvas.drawRect(100, 20, 300, 400, paint);
 
 	}
 
