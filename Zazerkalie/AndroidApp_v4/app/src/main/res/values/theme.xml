@@ -1,0 +1,5 @@
+<resources>
+    <style name="HabraTheme" parent="@android:style/Theme.Black">
+
+    </style>
+</resources>
