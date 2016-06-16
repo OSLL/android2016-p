@@ -12,21 +12,20 @@ public class MainActivity extends AppCompatActivity {
 
     private GameController gameController;
     private GestureDetector gestureDetector;
-    private MyView myView;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         // hide head-line
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         // hide uvedomlenia:
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        setContentView(new GameController(this));
 
         //myView = new MyView(this);
-        gameController = new GameController(this);
+       // gameController = new GameController(this);
 
         gestureDetector = new GestureDetector(this, new MyGestureListener());
     }
