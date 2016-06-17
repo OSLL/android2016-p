@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         // hide uvedomlenia:
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameController(this));
+        GameController.Init(this);
+        setContentView(GameController.GetInstance());
 
         //myView = new MyView(this);
        // gameController = new GameController(this);

@@ -12,6 +12,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import java.util.Timer;
+
 
 enum GameState
 {
@@ -29,42 +31,43 @@ public class GameController extends View
 
 	private Activity activity;
 	private GameState gamePhase;
+	private IGameState currentState;
 
 	public static float screenHeight;
 	public static float screenWidth;
 	private Paint paint;
-	//private Paint textPaint;
-	
+
+	private float lastTimeMillis;
+	private float currentTimeMillis;
 
     private final int QUIT_KEY = 1;
     private final int NEW_GAME_KEY = 0;
 
-	
-	public GameController(Context context)
+	private static GameController instance;
+	private GameController(Context context)
 	{
 		super(context);
+	}
 
+	public static GameController GetInstance()
+	{
+		return instance;
+	}
+
+	public static void Init(Context context)
+	{
+		instance = new GameController(context);
+		instance.Init();
+	}
+
+	private void Init()
+	{
 		paint = new Paint();
 		paint.setColor(Color.WHITE);
 		setGamePhase(GameState.PHASE_NEW_GAME);
-	}
-
-	public void Init(int w, int h, int oldw, int oldh)
-	{
-		screenHeight = h;
-		screenWidth = w;
-		/*paint = new Paint();
-		paint.setColor(Color.BLACK);*/
-	}
-
-	public void newGame()
-	{
-
-	}
-	
-	private void phasePlay(double deltaT)
-	{
-
+		screenHeight = getHeight();
+		screenWidth = getWidth();
+		lastTimeMillis = System.currentTimeMillis();
 	}
 
 	void setGamePhase(GameState nextPhase)
@@ -73,10 +76,12 @@ public class GameController extends View
 		{
 			case PHASE_NEW_GAME:
 				gamePhase = GameState.PHASE_NEW_GAME;
+				currentState = new StartGameState();
+				currentState.InvokeState();
 				break;
 			case PHASE_PLAY:
 				gamePhase = GameState.PHASE_PLAY;
-				newGame();
+				currentState = new PlayGameState();
 				break;
 			case PHASE_RESULT:
 				gamePhase = GameState.PHASE_RESULT;
@@ -84,9 +89,9 @@ public class GameController extends View
 		}
 	}
 	
-	private void updateAll(double deltaT)
+	private void updateAll(float deltaT)
 	{
-		switch (gamePhase)
+		/*switch (gamePhase)
 		{
 			case PHASE_NEW_GAME:
 				break;
@@ -94,16 +99,24 @@ public class GameController extends View
 				break;
 			case PHASE_RESULT:
 				break;
-		}
-		
-		
+		}*/
+
+		currentState.Update(deltaT);
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas)
 	{
-		canvas.drawRect(100, 20, 300, 400, paint);
+		float deltaT = getDeltaT();
+		updateAll(deltaT);
+	}
 
+	private float getDeltaT()
+	{
+		currentTimeMillis = System.currentTimeMillis();
+		float deltaT = currentTimeMillis - lastTimeMillis;
+		lastTimeMillis = currentTimeMillis;
+		return deltaT;
 	}
 
 	public void stopGame()
@@ -122,7 +135,6 @@ public class GameController extends View
 	{
 		switch (eventType)
 		{
-			
 			case ACTION_DOWN:				
 
 				break;
