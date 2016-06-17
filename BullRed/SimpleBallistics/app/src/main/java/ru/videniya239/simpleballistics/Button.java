@@ -14,7 +14,6 @@ public class Button
 {
     public Collider collider;
     public ButtonName name;
-    //public Bitmap image ;
     public Menu menu;
     public Button (float x1, float y1, float x2, float y2, ButtonName buttonName)
     {
