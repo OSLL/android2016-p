@@ -1,7 +1,9 @@
 package ru.videniya239.simpleballistics;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
  * Created by user on 6/17/2016.
@@ -10,6 +12,8 @@ public class Bullet
 {
     private Body body;
     private Vector2 vector2;
+
+    private Paint paint = new Paint();
 
     float w; //WINDOWWIDTH
     float h; //windowheight
@@ -37,8 +41,11 @@ public class Bullet
     float gY;
 
 
-    int k;//коэффициенты их бы надо подоюрать
-    int m;
+    float k;//коэффициенты их бы надо подоюрать
+    float m;
+
+    private float currentTime;
+
 
 
     public Body GetBody()
@@ -48,6 +55,7 @@ public class Bullet
 
     public Bullet()
     {
+        paint.setColor(Color.WHITE);
         w = GameController.screenWidth; //получаем разрешение экранчика
         h = GameController.screenHeight;
 
@@ -58,14 +66,14 @@ public class Bullet
 
         //v [300, 400] м/с
         //вот эта параша должна вводиться
-        modV = 400; //Скорость
-        alpha = 50; //Угол
+        modV = 250; //Скорость
+        alpha = 60; //Угол
         //
 
         vX =  modV* (float)Math.cos(alpha*Math.PI/180)*w/w_m;
         vY = -modV* (float)Math.sin(alpha*Math.PI/180)*w/w_m;
 
-        k = 200;//константы
+        k = 100;//константы
         m = 1500;
 
         modVw = 10 ;//а вот эту парашу надо генерировать в каких-то границах
@@ -74,7 +82,7 @@ public class Bullet
 
 
         posX = 20;//начальное положение снаряда
-        posY = w-20;
+        posY = h - 20;
         posX0 = posX;
         posY0 = posY;
 
@@ -82,18 +90,31 @@ public class Bullet
 
     public void Update(float deltaT)
     {
+        currentTime += deltaT;
+        if (currentTime > 300) {
+            LevelManager.GetInstance().GetCurrentLevel().traectory.add(new Vector2(posX, posY));
+            currentTime = 0;
+        }
+
+
         aX = (k / m) * (vX + (-vwX));//находим значение ускорения в данный момент времени
         aY = -gY + (k / m) * vY;
 
         vX = vX - (deltaT/1000) * aX;//находим значение скорости в данный момент времени
         vY = vY - (deltaT/1000) * aY;
-
+        Log.d("delta", "" + deltaT);
         posX = posX + (deltaT/1000) * vX;//считая, что движение равномерное на deltaT находим новое положение снаряда
         posY = posY + (deltaT/1000) * vY;
     }
 
     public void Draw(Canvas canvas)
     {
-        canvas.drawCircle(posX, posY, 5.0f, new Paint() );
+
+        if ((posX<=posX0) && (posY<=posY0)) {
+            canvas.drawCircle(posX, posY, 15.0f, paint);
+            Log.d("Bullet", "" + posX + " " + posY);
+        }
     }
+
+
 }

@@ -3,11 +3,16 @@ package ru.videniya239.simpleballistics;
 //import static com.company.ButtonName.*;
 //import static com.company.ButtonName.Play;
 
+import android.app.Application;
 import android.graphics.Canvas;
-<<<<<<< HEAD
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.os.Debug;
+import android.util.Log;
 import android.widget.ImageView;
-=======
->>>>>>> a63745b251695aba2198eb116b70b1d3221999ba
+
+import junit.framework.Assert;
+
 
 /**
  * Created by user on 6/16/2016.
@@ -28,9 +33,13 @@ enum ButtonName
 
 public class StartMenu implements Menu
 {
+    private BackTexture backTexture;
+    private Paint paint;
+
     public StartMenu()
     {
-        BackTexture backTexture = new BackTexture(MainActivity.startMenuImage);
+        backTexture = new BackTexture(MainActivity.startMenuImage);
+        createButtons();
     }
 
     public void invoke()
@@ -62,32 +71,30 @@ public class StartMenu implements Menu
 
     public void Draw(Canvas canvas)
     {
-
+        backTexture.draw(canvas, paint);
+        //canvas.drawBitmap(backTexture.image, 0, 0, new Paint());
     }
 
-    @Override
-    public void invoke()
-    {
-
-    }
 
     public void createButtons()
     {
         //create your buttons here
-        Button playButton = new Button(0, 0, 100, 100, ButtonName.PlayButton);
+        Log.d("Screen", GameController.screenWidth + " " + (1033f/1785f) );
+        Button playButton = new Button(GameController.screenWidth*(1033f/1785f), GameController.screenHeight*(515f/1000f),
+                GameController.screenWidth*(1243f/1785f), GameController.screenHeight*(734f/1000f), ButtonName.PlayButton);
         playButton.attach(this);
-        Button exitButton = new Button(100, 0, 200, 100, ButtonName.ExitButton);
+        Button exitButton = new Button(GameController.screenWidth*(1265/1785), GameController.screenHeight*(841/1000), GameController.screenWidth*(1419/1785), GameController.screenHeight*(987/1000), ButtonName.ExitButton);
         exitButton.attach(this);
-        Button infoButton = new Button(200, 0, 300, 100, ButtonName.InfoButton);
+        Button infoButton = new Button(GameController.screenWidth*(1445/1785), GameController.screenHeight*(841/1000), GameController.screenWidth*(1603/1785), GameController.screenHeight*(987/1000), ButtonName.InfoButton);
         infoButton.attach(this);
-        Button settingsButton = new Button(300, 0, 400, 100, ButtonName.SettingsButton);
+        Button settingsButton = new Button(GameController.screenWidth*(1620/1785), GameController.screenHeight*(841/1000), GameController.screenWidth*(1764/1785), GameController.screenHeight*(987/1000), ButtonName.SettingsButton);
         settingsButton.attach(this);
 
     }
 
-    private  void  playButtonTapped()
+    private void  playButtonTapped()
     {
-
+        GameController.GetInstance().setGamePhase(GameState.PHASE_PLAY);
     }
 
     private  void  exitButtonTapped()

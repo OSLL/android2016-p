@@ -16,40 +16,37 @@ public class MainActivity extends AppCompatActivity {
     private GameController gameController;
     private GestureDetector gestureDetector;
     public static Bitmap startMenuImage;
-
+    public static Bitmap test;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         // hide head-line
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         // hide uvedomlenia:
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-<<<<<<< HEAD
+
 
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        //imageView.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.startmenu1));
         startMenuImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.startmenu1);
 
-
+        ImageView imageViewTest = (ImageView) findViewById(R.id.imageViewTest);
+        test = BitmapFactory.decodeResource(this.getResources(), R.drawable.test);
       //  BitmapFactory.decodeResource(activity)
 
        // GameController.Init(this);
        // setContentView(GameController.GetInstance());
-=======
->>>>>>> a63745b251695aba2198eb116b70b1d3221999ba
 
 
-
+        gameController = new GameController(this);
         //GameController.Init(this);
         //setContentView(GameController.GetInstance());
-       setContentView(new GameController(this));
+       setContentView(gameController);
         //myView = new MyView(this);
        // gameController = new GameController(this);
-
         gestureDetector = new GestureDetector(this, new MyGestureListener());
     }
 

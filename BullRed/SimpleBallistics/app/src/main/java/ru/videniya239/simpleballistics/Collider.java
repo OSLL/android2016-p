@@ -48,10 +48,11 @@ public class Collider
 	
 	boolean intersectsP(float x, float y)
 	{
-		if (rect.contains(x, y))
+		/*if (rect.contains(x, y))
 			return true;
 		else
-			return false;
+			return false;*/
+		return  (x > rect.left) && (x < rect.right) && (y > rect.top) && (y < rect.bottom);
 	}
 	
 

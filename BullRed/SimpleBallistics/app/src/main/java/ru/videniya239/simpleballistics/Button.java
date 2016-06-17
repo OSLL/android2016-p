@@ -5,12 +5,14 @@ package ru.videniya239.simpleballistics;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.RectF;
 
 /**
  * Created by user on 6/16/2016.
  */
-public class Button
+
+public class Button implements ITappable
 {
     public Collider collider;
     public ButtonName name;
@@ -19,11 +21,13 @@ public class Button
     {
         collider = new Collider(new RectF(x1, y1, x2, y2));
         name = buttonName;
+        GameController.AttachButton(this);
     }
     public Button (Collider collider, ButtonName buttonName)
     {
         this.collider = collider;
         name = buttonName;
+        //GameController.GetInstance().AttachButton(this);
     }
 
     public void attach(Menu menu)
@@ -34,5 +38,13 @@ public class Button
     {
         if(menu != null)
             menu.update(name);
+    }
+
+    @Override
+    public void onTap(Vector2 position)
+    {
+        if (collider.intersectsP((int)position.x, (int)position.y)) {
+            Notify();
+        }
     }
 }

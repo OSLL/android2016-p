@@ -3,6 +3,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 
 public class Body
 {
@@ -102,8 +103,9 @@ public class Body
 	{
 		
 			canvas.save();
-			canvas.drawBitmap(image, null, new RectF((float)pos.x, (float)(pos.y), (float)pos.x + w/11f,
-					(float)pos.y + h/16f), paint);
+        Log.d("Test", image.toString());
+        canvas.drawBitmap(image, null, new RectF((float)pos.x, (float)(pos.y), (float)pos.x + w,
+					(float)pos.y + h), paint);
 			canvas.restore();
 			
 	}
