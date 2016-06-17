@@ -8,7 +8,7 @@ import android.graphics.RectF;
 public class BackTexture extends Body 
 {
 
-	BackTexture(Bitmap image)
+	public BackTexture(Bitmap image)
 	{
 		super(image, 0, 0, 0, 0);
 	}

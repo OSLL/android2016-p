@@ -3,6 +3,9 @@ package ru.videniya239.simpleballistics;
 //import static com.company.ButtonName.*;
 //import static com.company.ButtonName.Play;
 
+import android.graphics.Canvas;
+import android.widget.ImageView;
+
 /**
  * Created by user on 6/16/2016.
  */
@@ -21,6 +24,17 @@ enum ButtonName
 
 public class StartMenu implements Menu
 {
+    public StartMenu()
+    {
+        BackTexture backTexture = new BackTexture(MainActivity.startMenuImage);
+    }
+
+    public void invoke()
+    {
+
+        //backTexture.draw(Canvas canvas, Paint paint);
+    }
+
     @Override
     public void update(ButtonName buttonName)
     {

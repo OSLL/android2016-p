@@ -1,5 +1,7 @@
 package ru.videniya239.simpleballistics;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -7,11 +9,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
     private GameController gameController;
     private GestureDetector gestureDetector;
+    public static Bitmap startMenuImage;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -22,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
         // hide uvedomlenia:
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        //imageView.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.startmenu1));
+        startMenuImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.startmenu1);
+
+
+      //  BitmapFactory.decodeResource(activity)
+
         GameController.Init(this);
         setContentView(GameController.GetInstance());
 
