@@ -7,18 +7,23 @@ import android.graphics.Canvas;
  */
 public class StartGameState implements IGameState
 {
-    @Override
-    public void Update(float deltaT) {
+    private StartMenu startMenu;
 
+    @Override
+    public void Update(float deltaT)
+    {
     }
 
     @Override
-    public void Draw(Canvas canvas) {
-
+    public void Draw(Canvas canvas)
+    {
+        startMenu.Draw(canvas);
     }
 
     @Override
-    public void InvokeState() {
-
+    public void InvokeState()
+    {
+        startMenu = new StartMenu();
+        startMenu.invoke();
     }
 }

@@ -4,7 +4,10 @@ package ru.videniya239.simpleballistics;
 //import static com.company.ButtonName.Play;
 
 import android.graphics.Canvas;
+<<<<<<< HEAD
 import android.widget.ImageView;
+=======
+>>>>>>> a63745b251695aba2198eb116b70b1d3221999ba
 
 /**
  * Created by user on 6/16/2016.
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 interface Menu
 {
     void update(ButtonName b);
+    void invoke();
 }
 
 enum ButtonName
@@ -55,6 +59,18 @@ public class StartMenu implements Menu
                 break;
         }
     }
+
+    public void Draw(Canvas canvas)
+    {
+
+    }
+
+    @Override
+    public void invoke()
+    {
+
+    }
+
     public void createButtons()
     {
         //create your buttons here

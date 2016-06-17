@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         // hide uvedomlenia:
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+<<<<<<< HEAD
 
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
@@ -36,9 +37,16 @@ public class MainActivity extends AppCompatActivity {
 
       //  BitmapFactory.decodeResource(activity)
 
-        GameController.Init(this);
-        setContentView(GameController.GetInstance());
+       // GameController.Init(this);
+       // setContentView(GameController.GetInstance());
+=======
+>>>>>>> a63745b251695aba2198eb116b70b1d3221999ba
 
+
+
+        //GameController.Init(this);
+        //setContentView(GameController.GetInstance());
+       setContentView(new GameController(this));
         //myView = new MyView(this);
        // gameController = new GameController(this);
 
