@@ -3,12 +3,15 @@ package ru.videniya239.simpleballistics;
 //import static com.company.ButtonName.*;
 //import static com.company.ButtonName.Play;
 
+import android.graphics.Canvas;
+
 /**
  * Created by user on 6/16/2016.
  */
 interface Menu
 {
     void update(ButtonName b);
+    void invoke();
 }
 
 enum ButtonName
@@ -41,6 +44,18 @@ public class StartMenu implements Menu
                 break;
         }
     }
+
+    public void Draw(Canvas canvas)
+    {
+
+    }
+
+    @Override
+    public void invoke()
+    {
+
+    }
+
     public void createButtons()
     {
         //create your buttons here

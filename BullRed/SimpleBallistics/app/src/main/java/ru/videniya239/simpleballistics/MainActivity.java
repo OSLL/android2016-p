@@ -1,5 +1,7 @@
 package ru.videniya239.simpleballistics;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -22,9 +24,12 @@ public class MainActivity extends AppCompatActivity {
         // hide uvedomlenia:
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        GameController.Init(this);
-        setContentView(GameController.GetInstance());
 
+
+
+        //GameController.Init(this);
+        //setContentView(GameController.GetInstance());
+       setContentView(new GameController(this));
         //myView = new MyView(this);
        // gameController = new GameController(this);
 
