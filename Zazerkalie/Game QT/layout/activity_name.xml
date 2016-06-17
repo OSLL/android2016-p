@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="com.zazerk.lie.successapp.NameActivity"
+    android:background="#ffffff">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView2"
+        android:src="@drawable/name"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:scaleType="centerCrop"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:textColor="#FFFFFF"
+        android:autoText="false"
+        android:hint="@string/hint"
+        android:typeface="serif"
+        android:textSize="25dp"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_name"
+        android:id="@+id/textView"
+        android:textColor="#FFFFFF"
+        android:textIsSelectable="false"
+        android:textSize="35dp"
+        android:layout_marginTop="42dp"
+        android:visibility="visible"
+        android:typeface="serif"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/vvod"
+        android:layout_alignEnd="@+id/vvod" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vvod"
+        android:id="@+id/vvod"
+        android:background="#7ed2d7"
+        android:onClick="onMyButtonClick"
+        android:textSize="25dp"
+        android:typeface="serif"
+        android:visibility="visible"
+        android:width="150dp"
+        android:layout_marginBottom="49dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
