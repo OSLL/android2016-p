@@ -4,9 +4,9 @@ package ru.programi4koff.team.superuplication228;
  * Created by user on 6/16/2016.
  */
 public class Player {
-    private float xPlayer;
-    private float yPlayer;
-    private float side;
+    private float xPlayer = 0;
+    private float yPlayer = 0;
+    private float side = 0;
 
     public Player(float xPlayer, float yPlayer, float side) {
         this.xPlayer = xPlayer;
