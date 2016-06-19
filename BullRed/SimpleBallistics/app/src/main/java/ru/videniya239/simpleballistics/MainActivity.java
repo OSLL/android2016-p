@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +18,15 @@ public class MainActivity extends AppCompatActivity {
     private GestureDetector gestureDetector;
     public static Bitmap startMenuImage;
     public static Bitmap test;
+   /* private static MainActivity instance;
+
+    public static MainActivity getInstance() {
+        return instance;
+    }*/
+
+    //public static SeekBar seekBar;
+
+    public static Bitmap level1;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -29,12 +39,16 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
+        //seekBar = (SeekBar)findViewById(R.id.seekBar);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         startMenuImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.startmenu1);
 
         ImageView imageViewTest = (ImageView) findViewById(R.id.imageViewTest);
         test = BitmapFactory.decodeResource(this.getResources(), R.drawable.test);
+
+        ImageView level1Image = (ImageView) findViewById(R.id.level1);
+        level1 = BitmapFactory.decodeResource(this.getResources(), R.drawable.level1);
       //  BitmapFactory.decodeResource(activity)
 
        // GameController.Init(this);

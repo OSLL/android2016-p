@@ -2,9 +2,6 @@ package ru.videniya239.simpleballistics;
 
 import android.graphics.Canvas;
 
-/**
- * Created by user on 6/17/2016.
- */
 public class StartGameState implements IGameState
 {
     private StartMenu startMenu;
@@ -24,6 +21,11 @@ public class StartGameState implements IGameState
     public void InvokeState()
     {
         startMenu = new StartMenu();
-        startMenu.invoke();
+        startMenu.show();
+    }
+
+    @Override
+    public void EndState() {
+        startMenu.close();
     }
 }

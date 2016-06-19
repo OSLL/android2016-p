@@ -1,32 +1,19 @@
 package ru.videniya239.simpleballistics;
 
-//import static com.company.ButtonName.*;
-//import static com.company.ButtonName.Play;
-
-import android.app.Application;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Debug;
 import android.util.Log;
-import android.widget.ImageView;
 
-import junit.framework.Assert;
-
-
-/**
- * Created by user on 6/16/2016.
- */
 interface Menu
 {
-    void update(ButtonName b);
-    void invoke();
+    void updateButtons(ButtonName b);
+    void show();
 }
 
 enum ButtonName
 {
     // you should enumerate button names here
-    PlayButton, ExitButton, InfoButton, SettingsButton;
+    PlayButton, ExitButton, InfoButton, SettingsButton, ShootButton, SliderButton;
 }
 
 
@@ -39,19 +26,22 @@ public class StartMenu implements Menu
     public StartMenu()
     {
         backTexture = new BackTexture(MainActivity.startMenuImage);
-        createButtons();
     }
 
-    public void invoke()
-    {
 
-        //backTexture.draw(Canvas canvas, Paint paint);
+
+    public void close()
+    {
+        GameController.DetachButton(playButton);
+        GameController.DetachButton(infoButton);
+        GameController.DetachButton(exitButton);
+        GameController.DetachButton(settingsButton);
     }
 
     @Override
-    public void update(ButtonName buttonName)
+    public void updateButtons(ButtonName buttonName)
     {
-        //case of your buttonEvents
+        //Log.d("ttt", "" + buttonName);
         switch(buttonName)
         {
             case PlayButton:
@@ -69,43 +59,53 @@ public class StartMenu implements Menu
         }
     }
 
+    @Override
+    public void show()
+    {
+        createButtons();
+    }
+
     public void Draw(Canvas canvas)
     {
         backTexture.draw(canvas, paint);
-        //canvas.drawBitmap(backTexture.image, 0, 0, new Paint());
     }
 
+    Button playButton;
+    Button exitButton;
+    Button infoButton;
+    Button settingsButton;
 
     public void createButtons()
     {
-        //create your buttons here
-        Log.d("Screen", GameController.screenWidth + " " + (1033f/1785f) );
-        Button playButton = new Button(GameController.screenWidth*(1033f/1785f), GameController.screenHeight*(515f/1000f),
+        playButton = new Button(GameController.screenWidth*(1033f/1785f), GameController.screenHeight*(515f/1000f),
                 GameController.screenWidth*(1243f/1785f), GameController.screenHeight*(734f/1000f), ButtonName.PlayButton);
         playButton.attach(this);
-        Button exitButton = new Button(GameController.screenWidth*(1265/1785), GameController.screenHeight*(841/1000), GameController.screenWidth*(1419/1785), GameController.screenHeight*(987/1000), ButtonName.ExitButton);
-        exitButton.attach(this);
-        Button infoButton = new Button(GameController.screenWidth*(1445/1785), GameController.screenHeight*(841/1000), GameController.screenWidth*(1603/1785), GameController.screenHeight*(987/1000), ButtonName.InfoButton);
+        infoButton = new Button(GameController.screenWidth*(1265f/1785f), GameController.screenHeight*(841f/1000f),
+                GameController.screenWidth*(1419f/1785f), GameController.screenHeight*(987f/1000f), ButtonName.InfoButton);
         infoButton.attach(this);
-        Button settingsButton = new Button(GameController.screenWidth*(1620/1785), GameController.screenHeight*(841/1000), GameController.screenWidth*(1764/1785), GameController.screenHeight*(987/1000), ButtonName.SettingsButton);
+        settingsButton = new Button(GameController.screenWidth*(1445f/1785f), GameController.screenHeight*(841f/1000f),
+                GameController.screenWidth*(1603f/1785f), GameController.screenHeight*(987f/1000f), ButtonName.SettingsButton);
         settingsButton.attach(this);
+        exitButton = new Button(GameController.screenWidth*(1620f/1785f), GameController.screenHeight*(841f/1000f),
+                GameController.screenWidth*(1764f/1785f), GameController.screenHeight*(987f/1000f), ButtonName.ExitButton);
+        exitButton.attach(this);
 
     }
 
-    private void  playButtonTapped()
+    private void playButtonTapped()
     {
-        GameController.GetInstance().setGamePhase(GameState.PHASE_PLAY);
+        GameController.setGamePhase(GameState.PHASE_PLAY);
     }
 
-    private  void  exitButtonTapped()
+    private void exitButtonTapped()
+    {
+        GameController.stopGame();
+    }
+    private void infoButtonTapped()
     {
 
     }
-    private  void  infoButtonTapped()
-    {
-
-    }
-    private  void  settingsButtonTapped()
+    private void settingsButtonTapped()
     {
 
     }

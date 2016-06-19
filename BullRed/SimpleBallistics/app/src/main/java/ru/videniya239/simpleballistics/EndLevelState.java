@@ -2,9 +2,6 @@ package ru.videniya239.simpleballistics;
 
 import android.graphics.Canvas;
 
-/**
- * Created by user on 6/17/2016.
- */
 public class EndLevelState implements IGameState
 {
     @Override
@@ -18,7 +15,14 @@ public class EndLevelState implements IGameState
     }
 
     @Override
-    public void InvokeState() {
+    public void InvokeState()
+    {
+        GameController.setGamePhase(GameState.PHASE_PLAY);
+    }
+
+    @Override
+    public void EndState()
+    {
 
     }
 }
