@@ -37,6 +37,7 @@ public class PlayGameState implements IGameState
     @Override
     public void InvokeState()
     {
+        Log.d("levelmanager", "" + levelManager.GetCurrentLevelNumber());
         if (levelManager.GetCurrentLevelNumber() < levelManager.GetLevelCount())
         {
             levelManager.MoveNext();

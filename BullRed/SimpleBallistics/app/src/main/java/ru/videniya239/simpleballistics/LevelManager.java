@@ -9,13 +9,17 @@ public class LevelManager
     private int currentLevelNumber;
     private static LevelManager instance;
 
-    public static LevelManager GetInstance() {
+    public static LevelManager GetInstance()
+    {
         if (instance == null)
+        {
             instance = new LevelManager();
+        }
         return instance;
     }
 
-    private LevelManager() {
+    private LevelManager()
+    {
         Initialize();
     }
 
@@ -45,14 +49,18 @@ public class LevelManager
         return levels;
     }
 
-    public void AddLevels(ArrayList<Level> levels) {
-        for (Level level : levels) {
+    public void AddLevels(ArrayList<Level> levels)
+    {
+        for (Level level : levels)
+        {
             AddLevel(level);
         }
     }
 
-    public void Initialize() {
-        if (levels == null) {
+    public void Initialize()
+    {
+        if (levels == null)
+        {
             levels = new ArrayList<Level>();
         }
 
@@ -65,7 +73,9 @@ public class LevelManager
         level1.Init(MainActivity.level1Texture, MainActivity.level1Map, 0);
         levels.add(level1);
 
-        levels.add(level1);
+       /* Level level2 = new Level();
+        level2.Init(MainActivity.level1Texture, MainActivity.level1Map, 0);
+        levels.add(level2);*/
     }
 
     public void Reset()
@@ -73,14 +83,16 @@ public class LevelManager
         currentLevelNumber = 0;
     }
 
-    public void SetLevel(int number) {
+    public void SetLevel(int number)
+    {
         if ((number < 1) || (number > GetLevelCount()))
             Assert.fail("Попытка обратиться к несуществующему уровню.");
         SetInternalCurrentLevelNumber(number);
         levels.get(GetInternalCurrentLevelNumber()).Start();
     }
 
-    public void MoveNext() {
+    public void MoveNext()
+    {
         SetLevel(currentLevelNumber + 1);
     }
 

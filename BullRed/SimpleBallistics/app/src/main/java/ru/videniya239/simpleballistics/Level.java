@@ -83,6 +83,10 @@ public class Level implements Menu
                         bullet.Update(deltaT);
                         break;
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
                 else
                 {
@@ -123,6 +127,7 @@ public class Level implements Menu
     {
         bulletFlying = false;
         cannon.Deactivate();
+        Log.d("level", "" + LevelManager.GetInstance().GetCurrentLevelNumber());
         GameController.DetachButton(shootButton);
         GameController.setGamePhase(GameState.PHASE_END_LEVEL);
     }
