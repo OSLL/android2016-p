@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/seekBar">
-    </SeekBar> -->
+    </SeekBar>-->
 
     <ImageView
         android:id="@+id/imageView"
@@ -28,17 +28,24 @@
         android:src="@drawable/startmenu1"/>
 
     <ImageView
-        android:id="@+id/imageViewTest"
+        android:id="@+id/levelt1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/test"/>
+        android:src="@drawable/levelt1"/>
 
     <ImageView
-        android:id="@+id/level1"
+        android:id="@+id/cannon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/level1"/>
+        android:src="@drawable/cannon"/>
+
+    <ImageView
+        android:id="@+id/levelm1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/levelm1"/>
 
 </RelativeLayout>

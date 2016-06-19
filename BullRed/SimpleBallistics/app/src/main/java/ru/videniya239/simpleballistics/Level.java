@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -18,7 +19,7 @@ public class Level implements Menu
     private Bitmap levelMap;
     private Button shootButton;
 
-    private final int checkAngle = 45;
+    private final int checkAngle = 60;
 
     private boolean bulletFlying;
     private float windVelocity;
@@ -34,9 +35,10 @@ public class Level implements Menu
         traectory = new ArrayList<>();
         paint = new Paint();
         paint.setColor(Color.WHITE);
-        cannon = new Cannon();
-    }
 
+        cannon = new Cannon(45, new Vector2(130, GameController.screenHeight - 480),
+                new Rect(0, (int)GameController.screenHeight - 600, 200, (int)GameController.screenHeight - 400));
+    }
     public void Start()
     {
         shootButton = new Button(0, 0, 300, 300, ButtonName.ShootButton);

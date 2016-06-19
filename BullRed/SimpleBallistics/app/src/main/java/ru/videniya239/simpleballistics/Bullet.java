@@ -52,10 +52,12 @@ public class Bullet
     private float currentTime;
 
 
-    public Bullet(float velocity, float angle)
+    public Bullet(float velocity, float angle, Vector2 startPos)
     {
         modV = velocity;
         alpha = angle;
+        posX = startPos.x;
+        posY = startPos.y;
         Init();
     }
 
@@ -129,8 +131,8 @@ public class Bullet
 
        // posX = 20;//начальное положение снаряда
        // posY = h - 20;
-        posX = 100;
-        posY = h - 100;
+        //posX = 100;
+        //posY = h - 100;
 
         posX0 = posX;
         posY0 = posY;

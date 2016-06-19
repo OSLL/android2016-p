@@ -62,7 +62,7 @@ public class LevelManager
     private void CreateLevels()
     {
         Level level1 = new Level();
-        level1.Init(MainActivity.level1, MainActivity.level1, 0);
+        level1.Init(MainActivity.level1Texture, MainActivity.level1Map, 0);
         levels.add(level1);
 
         levels.add(level1);
