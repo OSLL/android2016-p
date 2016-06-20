@@ -1,8 +1,10 @@
 package ru.videniya239.simpleballistics;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 
 public class Body
 {
@@ -102,8 +104,9 @@ public class Body
 	{
 		
 			canvas.save();
-			canvas.drawBitmap(image, null, new RectF((float)pos.x, (float)(pos.y), (float)pos.x + w/11f,
-					(float)pos.y + h/16f), paint);
+        Log.d("Test", image.toString());
+        canvas.drawBitmap(image, null, new RectF((float)pos.x, (float)(pos.y), (float)pos.x + w,
+					(float)pos.y + h), paint);
 			canvas.restore();
 			
 	}
@@ -120,8 +123,8 @@ public class Body
 	boolean collides(Collider collider)
 	{
 		if (canBeTapped)
-			if (collider.intersectsF(new RectF((float)pos.x, (float)pos.y, (float)(pos.x + sizeW),
-					(float)(pos.y + sizeH))))
+			if (collider.intersectsF(new RectF(pos.x, pos.y, (pos.x + sizeW),
+					(pos.y + sizeH))))
 				return true;
 			else
 				return false;

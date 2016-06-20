@@ -10,46 +10,61 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity {
 
     private GameController gameController;
     private GestureDetector gestureDetector;
     public static Bitmap startMenuImage;
+    public static Bitmap cannon;
+   /* private static MainActivity instance;
 
+    public static MainActivity getInstance() {
+        return instance;
+    }*/
+
+    //public static SeekBar seekBar;
+
+    public static Bitmap level1Map;
+    public static Bitmap level1Texture;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         // hide head-line
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         // hide uvedomlenia:
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-<<<<<<< HEAD
 
+
+        //seekBar = (SeekBar)findViewById(R.id.seekBar);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        //imageView.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.startmenu1));
         startMenuImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.startmenu1);
 
+        ImageView imageViewTest = (ImageView) findViewById(R.id.cannon);
+        cannon = BitmapFactory.decodeResource(this.getResources(), R.drawable.cannon);
 
+        ImageView level1ImageView = (ImageView) findViewById(R.id.levelm1);
+        level1Map = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelm1);
+
+        ImageView level1TextureView = (ImageView) findViewById(R.id.levelt1);
+        level1Texture = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelt1);
       //  BitmapFactory.decodeResource(activity)
 
        // GameController.Init(this);
        // setContentView(GameController.GetInstance());
-=======
->>>>>>> a63745b251695aba2198eb116b70b1d3221999ba
 
 
-
+        gameController = new GameController(this);
         //GameController.Init(this);
         //setContentView(GameController.GetInstance());
-       setContentView(new GameController(this));
+       setContentView(gameController);
         //myView = new MyView(this);
        // gameController = new GameController(this);
-
         gestureDetector = new GestureDetector(this, new MyGestureListener());
     }
 

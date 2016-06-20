@@ -1,33 +1,56 @@
 package ru.videniya239.simpleballistics;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.util.Log;
 
-/**
- * Created by user on 6/17/2016.
- */
+import junit.framework.Assert;
+
+import java.util.ArrayList;
+
 public class PlayGameState implements IGameState
 {
     private LevelManager levelManager;
-    private Cannon cannon;
-    private Bullet bullet;
+    private Paint paint;
+
 
     @Override
-    public void Update(float deltaT) {
-
+    public void Update(float deltaT)
+    {
+        levelManager.GetCurrentLevel().Update(deltaT);
     }
 
     @Override
-    public void Draw(Canvas canvas) {
+    public void Draw(Canvas canvas)
+    {
+        levelManager.GetCurrentLevel().Draw(canvas);
+    }
 
+    public PlayGameState()
+    {
+        paint = new Paint();
+        paint.setColor(Color.WHITE);
+        levelManager = LevelManager.GetInstance();
     }
 
     @Override
     public void InvokeState()
     {
-        levelManager = LevelManager.GetInstance();
-        //levelManager.Initialize();
+        Log.d("levelmanager", "" + levelManager.GetCurrentLevelNumber());
+        if (levelManager.GetCurrentLevelNumber() < levelManager.GetLevelCount())
+        {
+            levelManager.MoveNext();
+        }
+        else
+        {
+            GameController.setGamePhase(GameState.PHASE_RESULT);
+        }
+    }
 
-        bullet = new Bullet();
-        cannon = new Cannon();
+    @Override
+    public void EndState()
+    {
+
     }
 }

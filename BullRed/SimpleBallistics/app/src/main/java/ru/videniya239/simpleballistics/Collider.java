@@ -2,16 +2,17 @@ package ru.videniya239.simpleballistics;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 public class Collider
 {
-	RectF rect;
+	Rect rect;
 
 	Paint paint;
 	private int curRed;
 	
-	public Collider(RectF rect)
+	public Collider(Rect rect)
 	{
 		this.rect = rect;
 		paint = new Paint();
@@ -48,10 +49,11 @@ public class Collider
 	
 	boolean intersectsP(float x, float y)
 	{
-		if (rect.contains(x, y))
+		/*if (rect.contains(x, y))
 			return true;
 		else
-			return false;
+			return false;*/
+		return  (x > rect.left) && (x < rect.right) && (y > rect.top) && (y < rect.bottom);
 	}
 	
 

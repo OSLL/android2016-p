@@ -1,48 +1,47 @@
 package ru.videniya239.simpleballistics;
 
-//import static com.company.ButtonName.*;
-//import static com.company.ButtonName.Play;
-
 import android.graphics.Canvas;
-<<<<<<< HEAD
-import android.widget.ImageView;
-=======
->>>>>>> a63745b251695aba2198eb116b70b1d3221999ba
+import android.graphics.Paint;
+import android.util.Log;
 
-/**
- * Created by user on 6/16/2016.
- */
 interface Menu
 {
-    void update(ButtonName b);
-    void invoke();
+    void updateButtons(ButtonName b);
+    void show();
 }
 
 enum ButtonName
 {
     // you should enumerate button names here
-    PlayButton, ExitButton, InfoButton, SettingsButton;
+    PlayButton, ExitButton, InfoButton, SettingsButton, ShootButton, SliderButton;
 }
 
 
 
 public class StartMenu implements Menu
 {
+    private BackTexture backTexture;
+    private Paint paint;
+
     public StartMenu()
     {
-        BackTexture backTexture = new BackTexture(MainActivity.startMenuImage);
+        backTexture = new BackTexture(MainActivity.startMenuImage);
     }
 
-    public void invoke()
-    {
 
-        //backTexture.draw(Canvas canvas, Paint paint);
+
+    public void close()
+    {
+        GameController.DetachButton(playButton);
+        GameController.DetachButton(infoButton);
+        GameController.DetachButton(exitButton);
+        GameController.DetachButton(settingsButton);
     }
 
     @Override
-    public void update(ButtonName buttonName)
+    public void updateButtons(ButtonName buttonName)
     {
-        //case of your buttonEvents
+        //Log.d("ttt", "" + buttonName);
         switch(buttonName)
         {
             case PlayButton:
@@ -60,45 +59,53 @@ public class StartMenu implements Menu
         }
     }
 
+    @Override
+    public void show()
+    {
+        createButtons();
+    }
+
     public void Draw(Canvas canvas)
     {
-
+        backTexture.draw(canvas, paint);
     }
 
-    @Override
-    public void invoke()
-    {
-
-    }
+    Button playButton;
+    Button exitButton;
+    Button infoButton;
+    Button settingsButton;
 
     public void createButtons()
     {
-        //create your buttons here
-        Button playButton = new Button(0, 0, 100, 100, ButtonName.PlayButton);
+        playButton = new Button(GameController.screenWidth*(1033f/1785f), GameController.screenHeight*(515f/1000f),
+                GameController.screenWidth*(1243f/1785f), GameController.screenHeight*(734f/1000f), ButtonName.PlayButton);
         playButton.attach(this);
-        Button exitButton = new Button(100, 0, 200, 100, ButtonName.ExitButton);
-        exitButton.attach(this);
-        Button infoButton = new Button(200, 0, 300, 100, ButtonName.InfoButton);
+        infoButton = new Button(GameController.screenWidth*(1265f/1785f), GameController.screenHeight*(841f/1000f),
+                GameController.screenWidth*(1419f/1785f), GameController.screenHeight*(987f/1000f), ButtonName.InfoButton);
         infoButton.attach(this);
-        Button settingsButton = new Button(300, 0, 400, 100, ButtonName.SettingsButton);
+        settingsButton = new Button(GameController.screenWidth*(1445f/1785f), GameController.screenHeight*(841f/1000f),
+                GameController.screenWidth*(1603f/1785f), GameController.screenHeight*(987f/1000f), ButtonName.SettingsButton);
         settingsButton.attach(this);
+        exitButton = new Button(GameController.screenWidth*(1620f/1785f), GameController.screenHeight*(841f/1000f),
+                GameController.screenWidth*(1764f/1785f), GameController.screenHeight*(987f/1000f), ButtonName.ExitButton);
+        exitButton.attach(this);
 
     }
 
-    private  void  playButtonTapped()
+    private void playButtonTapped()
+    {
+        GameController.setGamePhase(GameState.PHASE_PLAY);
+    }
+
+    private void exitButtonTapped()
+    {
+        GameController.stopGame();
+    }
+    private void infoButtonTapped()
     {
 
     }
-
-    private  void  exitButtonTapped()
-    {
-
-    }
-    private  void  infoButtonTapped()
-    {
-
-    }
-    private  void  settingsButtonTapped()
+    private void settingsButtonTapped()
     {
 
     }
