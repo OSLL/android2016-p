@@ -23,7 +23,7 @@ public class Slider
     private Vector2 centre;
     public float angle;
 
-    private boolean firstUp = true;
+    private boolean firstUp;
 
     //private Button cursorButton;
 
@@ -34,7 +34,8 @@ public class Slider
     private Vector2 startPoint;
     private Vector2 radiusSlider;
 
-    public Slider(Rect sliderRect, Rect cursorRect, int minValue, int maxValue, int startValue, int startAngle, Vector2 centre, Vector2 startPoint, Vector2 radiusSlider)
+    public Slider(Rect sliderRect, Rect cursorRect, int minValue, int maxValue, int startValue, int startAngle,
+                  Vector2 centre, Vector2 startPoint, Vector2 radiusSlider)
     {
         this.sliderRect = sliderRect;
         this.cursorRect = cursorRect;
@@ -63,7 +64,9 @@ public class Slider
                     sliderRect.right - offsetX / 2, sliderRect.bottom + offsetY));
         }*/
 
-        updateCursorRect();
+        //GameController.AttachSlider(this);
+
+        //updateCursorRect();
     }
 
 
@@ -97,13 +100,19 @@ public class Slider
         //canvas.drawRect(cursorRect, paint);
 
         canvas.save();
-        Log.d("slider", "" + value);
+       // Log.d("slider", "" + value);
         canvas.rotate(angle, centre.x, centre.y);
         canvas.scale(value / (float)maxValue, 1, startPoint.x, startPoint.y);
         canvas.drawBitmap(MainActivity.arrow, null, sliderRect, paint);
         //canvas.drawLine(centre.x, centre.y, tapPosition.x, tapPosition.y, paint);
         canvas.restore();
 
+    }
+
+    public void Activate()
+    {
+
+        firstUp = true;
     }
 
     public int getValue()
@@ -117,7 +126,8 @@ public class Slider
         {
             firstUp = false;
         }
-        else {
+        else
+        {
             LevelManager.GetInstance().GetCurrentLevel().Shoot();
         }
     }

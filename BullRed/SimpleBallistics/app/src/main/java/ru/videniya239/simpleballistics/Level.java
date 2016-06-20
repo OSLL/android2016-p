@@ -10,14 +10,14 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class Level implements Menu
+public class Level //implements Menu
 {
     private Cannon cannon;
     private Bullet bullet;
     private Paint paint;
     private BackTexture background;
     private Bitmap levelMap;
-    private Button shootButton;
+    //private Button shootButton;
 
     private final int checkAngle = 60;
 
@@ -38,16 +38,11 @@ public class Level implements Menu
         paint = new Paint();
         paint.setColor(Color.WHITE);
 
-        cannon = new Cannon(45, new Vector2(GameController.screenWidth * 54f / 700f, GameController.screenHeight * 256f / 349f),//тут говнище какое-то
-
-                cannonRect, carriageRect);
+        cannon = new Cannon(45, new Vector2(GameController.screenWidth * 54f / 700f,
+                GameController.screenHeight * 256f / 349f), cannonRect, carriageRect);
     }
     public void Start()
     {
-        //shootButton = new Button(0, 0, 300, 300, ButtonName.ShootButton);
-        shootButton = new Button(GameController.screenWidth * 1030f / 1280f, GameController.screenHeight * 550f / 628f,
-                GameController.screenWidth * 1250f / 1280f, GameController.screenHeight * 620f / 628f, ButtonName.ShootButton);
-        shootButton.attach(this);
         cannon.Activate();
     }
 
@@ -57,7 +52,6 @@ public class Level implements Menu
         if (!bulletFlying)
         {
             bullet = cannon.CreateBullet(windVelocity);
-            //bullet.modVw = windVelocity;
             bulletFlying = true;
         }
     }
@@ -77,17 +71,17 @@ public class Level implements Menu
                 paint.setColor(Color.BLACK);
                 canvas.drawCircle(position.x, position.y, 15.0f, paint);
             }
-
         }
 
     }
 
     public void Update(float deltaT)
     {
-        if (!bulletFlying) {
+        if (!bulletFlying)
+        {
             cannon.Update();
         }
-        if (bulletFlying)
+        else
         {
             for (int i = 0; i < 360 / checkAngle; i++)
             {
@@ -145,9 +139,10 @@ public class Level implements Menu
         bulletFlying = false;
         traectory.clear();
         cannon.Deactivate();
-        Log.d("level", "" + LevelManager.GetInstance().GetCurrentLevelNumber());
-        GameController.DetachButton(shootButton);
-        GameController.setGamePhase(GameState.PHASE_END_LEVEL);
+        Log.d("level", "level finished: " + LevelManager.GetInstance().GetCurrentLevelNumber());
+        //GameController.DetachButton(shootButton);
+        GameController.DetachSlider(cannon.velocitySlider);
+        GameController.setGamePhase(GameState.PHASE_RESULT);
     }
 
     private boolean insideScreen(float posX, float posY)
@@ -162,7 +157,7 @@ public class Level implements Menu
                                  y * levelMap.getHeight() / (int)GameController.screenHeight);
     }
 
-    @Override
+    /*@Override
     public void updateButtons(ButtonName b)
     {
         if (b == ButtonName.ShootButton)
@@ -176,5 +171,5 @@ public class Level implements Menu
     public void show()
     {
 
-    }
+    }*/
 }

@@ -22,7 +22,7 @@ public class LevelManager
 
     private LevelManager()
     {
-        Initialize();
+        //Initialize();
     }
 
     private ArrayList<Level> levels;
@@ -31,7 +31,8 @@ public class LevelManager
         return levels.size();
     }
 
-    public Level GetCurrentLevel() {
+    public Level GetCurrentLevel()
+    {
         return levels.get(GetInternalCurrentLevelNumber());
     }
 
@@ -59,15 +60,11 @@ public class LevelManager
         }
     }
 
-    public void Initialize()
+   /* public void Initialize()
     {
-        if (levels == null)
-        {
-            levels = new ArrayList<Level>();
-        }
+        //if (levels == null)
 
-        CreateLevels();
-    }
+    }*/
 
     private void CreateLevels()
     {
@@ -103,7 +100,14 @@ public class LevelManager
     public void Reset()
     {
         currentLevelNumber = 0;
-        Initialize();
+        {
+            levels = new ArrayList<Level>();
+        }
+        currentLevelNumber = 0;
+
+        //GameController.
+        CreateLevels();
+        //Initialize();
     }
 
     public void SetLevel(int number)
