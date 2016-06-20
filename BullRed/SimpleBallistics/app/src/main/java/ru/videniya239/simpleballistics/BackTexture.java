@@ -20,7 +20,7 @@ public class BackTexture extends Body
 	void draw(Canvas canvas, Paint paint, float w, float h)
 	{
 		canvas.save();
-		Log.d("Test", image.toString());
+		//Log.d("Test", image.toString());
 		canvas.drawBitmap(image, null, new RectF(0, 0, (int)GameController.screenWidth, (int)GameController.screenHeight),
 				//0, 0,
 				paint);
@@ -29,7 +29,7 @@ public class BackTexture extends Body
 
 	public void draw(Canvas canvas, Paint paint)
 	{
-		Log.d("Test2", image.toString());
+		//Log.d("Test2", image.toString());
 		draw(canvas, paint, GameController.screenWidth, GameController.screenHeight);
 	}
 

@@ -1,4 +1,5 @@
 package ru.videniya239.simpleballistics;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -122,8 +123,8 @@ public class Body
 	boolean collides(Collider collider)
 	{
 		if (canBeTapped)
-			if (collider.intersectsF(new RectF((float)pos.x, (float)pos.y, (float)(pos.x + sizeW),
-					(float)(pos.y + sizeH))))
+			if (collider.intersectsF(new RectF(pos.x, pos.y, (pos.x + sizeW),
+					(pos.y + sizeH))))
 				return true;
 			else
 				return false;

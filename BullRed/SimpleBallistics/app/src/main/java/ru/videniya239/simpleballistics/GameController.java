@@ -17,11 +17,11 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Timer;
 
-
 enum GameState
 {
 	PHASE_NEW_GAME,
 	PHASE_PLAY,
+	PHASE_END_LEVEL,
 	PHASE_RESULT,
 }
 
@@ -33,33 +33,33 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	public static final int ACTION_DOUBLE_TAP = 4;
 
 	private static Activity activity;
-	private GameState gamePhase;
-	private IGameState currentState;
+	private static GameState gamePhase;
+	private static IGameState currentState;
 
 	public static float screenHeight;
 	public static float screenWidth;
 	private Paint paint;
 
-	private float lastTimeMillis;
-	private float currentTimeMillis;
+	private long lastTimeMillis;
+	private long currentTimeMillis;
 
     private final int QUIT_KEY = 1;
     private final int NEW_GAME_KEY = 0;
 
-	private static GameController instance;
+	//private static GameController instance;
 	public GameController(Context context)
 	{
 		super(context);
 		getHolder().addCallback(this);
 		activity = (Activity)context;
-		instance = this;
+		//instance = this;
 		//Init();
 	}
 
-	public static GameController GetInstance()
+	/*public static GameController GetInstance()
 	{
 		return instance;
-	}
+	}*/
 
 	public static void Init(Context context)
 	{
@@ -71,28 +71,35 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	{
 		paint = new Paint();
 		buttons = new ArrayList<>();
+		sliders = new ArrayList<>();
 		paint.setColor(Color.WHITE);
 		setGamePhase(GameState.PHASE_NEW_GAME);
 		lastTimeMillis = System.currentTimeMillis();
 
 	}
 
-	void setGamePhase(GameState nextPhase)
+	public static void setGamePhase(GameState nextPhase)
 	{
+		if (currentState != null) {
+			currentState.EndState();
+		}
+		gamePhase = nextPhase;
 		switch (nextPhase)
 		{
+			case PHASE_END_LEVEL:
+				currentState = new EndLevelState();
+				break;
 			case PHASE_NEW_GAME:
-				gamePhase = GameState.PHASE_NEW_GAME;
 				currentState = new StartGameState();
 				break;
 			case PHASE_PLAY:
-				gamePhase = GameState.PHASE_PLAY;
 				currentState = new PlayGameState();
 				break;
 			case PHASE_RESULT:
-				gamePhase = GameState.PHASE_RESULT;
+				currentState = new WinGameState();
 				break;
 		}
+
 		currentState.InvokeState();
 	}
 
@@ -120,28 +127,27 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 
 	private float getDeltaT()
 	{
-		/*currentTimeMillis = System.currentTimeMillis();
+
+		currentTimeMillis = System.currentTimeMillis();
 		float deltaT = currentTimeMillis - lastTimeMillis;
+		//Log.d("time", "" + System.currentTimeMillis() + " " + lastTimeMillis + " " + deltaT);
 		lastTimeMillis = currentTimeMillis;
-		return deltaT;*/
-
-		return 85.6f;
+		return deltaT;
 	}
 
-	public void stopGame()
+	public static void stopGame()
 	{
-
+		drawThread.setRunning(false);
 	}
 
-	// releases resources; called by CannonGame's onDestroy method
+	// releases resources; called by onDestroy method
 	public void releaseResources()
 	{
-		//soundPool.release(); // release all resources used by the SoundPool
-		//soundPool = null;
 	}
 
 
 	private static ArrayList<ITappable> buttons;
+	private static ArrayList<Slider> sliders;
 	public void motionEvent(int eventType, MotionEvent event)
 	{
 		switch (eventType)
@@ -153,7 +159,8 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 
 				break;
 			case ACTION_MOVE:
-
+				Log.d("Input", "Move");
+				notifySliders(new Vector2(event.getX(), event.getY()));
 				break;
 			case ACTION_DOUBLE_TAP:
 				break;
@@ -164,12 +171,36 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	{
 		buttons.add(button);
 	}
+	public static void DetachButton(ITappable button)
+	{
+		buttons.remove(button);
+	}
+	public static void AttachSlider(Slider slider)
+	{
+		sliders.add(slider);
+	}
+	public static void DetachSlideer(Slider slider)
+	{
+		sliders.remove(slider);
+	}
 
 	private void notifyButtons(Vector2 position)
 	{
 		for (ITappable button : buttons)
 		{
-			button.onTap(position);
+			boolean caught = button.onTap(position);
+			if (caught)
+				break;
+		}
+	}
+
+	private void notifySliders(Vector2 position)
+	{
+		for (Slider slider : sliders)
+		{
+			boolean caught = slider.update(position);
+			if (caught)
+				break;
 		}
 	}
 
@@ -178,7 +209,7 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 
 	}
 
-	private DrawThread drawThread;
+	private static DrawThread drawThread;
 	@Override
 	public void surfaceCreated(SurfaceHolder surfaceHolder)
 	{
@@ -189,20 +220,27 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+	public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2)
+	{
 
 	}
 
 	@Override
-	public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+	public void surfaceDestroyed(SurfaceHolder surfaceHolder)
+	{
 		boolean retry = true;
 		// завершаем работу потока
 		drawThread.setRunning(false);
-		while (retry) {
-			try {
+
+		while (retry)
+		{
+			try
+			{
 				drawThread.join();
 				retry = false;
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e)
+			{
 				// если не получилось, то будем пытаться еще и еще
 			}
 		}
@@ -213,39 +251,48 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 		private SurfaceHolder surfaceHolder;
 
 
-		public DrawThread(SurfaceHolder surfaceHolder){
+		public DrawThread(SurfaceHolder surfaceHolder)
+		{
 			this.surfaceHolder = surfaceHolder;
 		}
 
-		public void setRunning(boolean run) {
+		public void setRunning(boolean run)
+		{
 			runFlag = run;
 		}
 
 		@Override
-		public void run() {
+		public void run()
+		{
 			Canvas canvas;
-			while (runFlag) {
+			while (runFlag)
+			{
 				canvas = null;
-				try {
+				try
+				{
 					// получаем объект Canvas и выполняем отрисовку
 					canvas = surfaceHolder.lockCanvas(null);
-					synchronized (surfaceHolder) {
+					if (canvas != null)
+					{
+						synchronized (surfaceHolder)
+						{
 
-						if (canvas != null) {
 							screenHeight = canvas.getHeight();
 							screenWidth = canvas.getWidth();
-
-							GetInstance().draw(canvas);
+							draw(canvas);
 						}
 					}
 				}
-				finally {
-					if (canvas != null) {
+				finally
+				{
+					if (canvas != null)
+					{
 						// отрисовка выполнена. выводим результат на экран
 						surfaceHolder.unlockCanvasAndPost(canvas);
 					}
 				}
 			}
+			activity.finish();
 		}
 	}
 }

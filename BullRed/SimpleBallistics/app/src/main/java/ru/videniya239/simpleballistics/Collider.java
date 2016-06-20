@@ -2,16 +2,17 @@ package ru.videniya239.simpleballistics;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 public class Collider
 {
-	RectF rect;
+	Rect rect;
 
 	Paint paint;
 	private int curRed;
 	
-	public Collider(RectF rect)
+	public Collider(Rect rect)
 	{
 		this.rect = rect;
 		paint = new Paint();
