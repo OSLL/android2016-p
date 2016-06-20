@@ -49,6 +49,20 @@
         android:src="@drawable/levelm1"/>
 
     <ImageView
+        android:id="@+id/levelt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/levelt2"/>
+
+    <ImageView
+        android:id="@+id/levelm2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/levelm2"/>
+
+    <ImageView
         android:id="@+id/arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

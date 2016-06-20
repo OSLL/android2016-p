@@ -23,7 +23,7 @@ public class Slider
     private Vector2 centre;
     public float angle;
 
-    private boolean firstUp;
+    public boolean firstUp;
 
     //private Button cursorButton;
 
@@ -47,6 +47,9 @@ public class Slider
         this.startPoint = startPoint;
         this.value = startValue;
         this.angle = startAngle;
+
+
+        //firstUp = true;
 
         this.radiusSlider = radiusSlider;
 
@@ -112,7 +115,7 @@ public class Slider
     public void Activate()
     {
 
-        firstUp = true;
+        //firstUp = true;
     }
 
     public int getValue()

@@ -28,7 +28,7 @@ public class Level //implements Menu
 
     public static ArrayList<Vector2> traectory;
 
-    public void Init(Bitmap background, Bitmap levelMap, float windVelocity, Rect carriageRect, Rect cannonRect)
+    public void Init(Bitmap background, Bitmap levelMap, float windVelocity, Rect carriageRect, Rect cannonRect, Vector2 nail, int id)
     {
         this.background = new BackTexture(background);
         this.levelMap = levelMap;
@@ -38,8 +38,12 @@ public class Level //implements Menu
         paint = new Paint();
         paint.setColor(Color.WHITE);
 
-        cannon = new Cannon(45, new Vector2(GameController.screenWidth * 54f / 700f,
-                GameController.screenHeight * 256f / 349f), cannonRect, carriageRect);
+        cannon = new Cannon(45, nail, cannonRect, carriageRect);
+
+        if (id == 1)
+        {
+            cannon.velocitySlider.firstUp = true;
+        }
     }
     public void Start()
     {
@@ -79,7 +83,9 @@ public class Level //implements Menu
     {
         if (!bulletFlying)
         {
-            cannon.Update();
+            if (cannon != null) {
+                cannon.Update();
+            }
         }
         else
         {
@@ -142,7 +148,7 @@ public class Level //implements Menu
         Log.d("level", "level finished: " + LevelManager.GetInstance().GetCurrentLevelNumber());
         //GameController.DetachButton(shootButton);
         GameController.DetachSlider(cannon.velocitySlider);
-        GameController.setGamePhase(GameState.PHASE_RESULT);
+        GameController.setGamePhase(GameState.PHASE_PLAY);
     }
 
     private boolean insideScreen(float posX, float posY)
