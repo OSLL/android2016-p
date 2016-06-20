@@ -69,7 +69,7 @@ public class Level //implements Menu
                 bullet.Draw(canvas);
             for (Vector2 position : traectory) {
                 paint.setColor(Color.BLACK);
-                canvas.drawCircle(position.x, position.y, 15.0f, paint);
+                canvas.drawCircle(position.x, position.y, bullet.drawRadius, paint);
             }
         }
 
