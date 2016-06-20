@@ -7,21 +7,28 @@ import android.graphics.Rect;
 
 public class Cannon
 {
-    private Slider velocitySlider;
+    public Slider velocitySlider;
     private float currentAngle;
     private Bitmap cannonImage;
+    private Bitmap carriageImage;
     private Vector2 centre;
     private Rect cannonRect;
     private Paint paint;
+    private Rect carriageRect;
 
-    public Cannon(float currentAngle, Vector2 centre, Rect cannonRect)
+    public Cannon(float currentAngle, Vector2 centre, Rect cannonRect, Rect carriageRect)
     {
-        Rect velocitySliderRect = new Rect(100, 400, 1000, 500);
+        int offsetY = (int)GameController.screenHeight / 40;
+        int offsetX = (int)GameController.screenWidth * 3 / 7;
+        int radiusSliderX = cannonRect.width() * 5 / 7;
+        Rect velocitySliderRect = new Rect((int)centre.x + radiusSliderX , (int)centre.y - offsetY, (int)centre.x + offsetX, (int)centre.y + offsetY);
         Rect velocityCursorRect = new Rect(velocitySliderRect.left - 50, velocitySliderRect.top - 50,
                 velocitySliderRect.left + 50, velocitySliderRect.bottom + 50);
-        velocitySlider = new Slider(velocitySliderRect, velocityCursorRect, 0, 90, 75, true);
+        velocitySlider = new Slider(velocitySliderRect, velocityCursorRect, 0, 120, 60, 0, centre, new Vector2(centre.x + radiusSliderX, centre.y), new Vector2(radiusSliderX, 0));
         cannonImage = MainActivity.cannon;
+        carriageImage = MainActivity.carriageImage;
         this.cannonRect = cannonRect;
+        this.carriageRect = carriageRect;
         this.centre = centre;
         this.currentAngle = currentAngle;
         paint = new Paint();
@@ -42,24 +49,31 @@ public class Cannon
         currentAngle += angle;
     }
 
-    public Bullet CreateBullet()
+    public Bullet CreateBullet(float windVelocity)
     {
-        return new Bullet(velocitySlider.getValue(), currentAngle, centre);
+        return new Bullet(velocitySlider.getValue(), -currentAngle, centre, windVelocity);
     }
 
     public void Update()
     {
-        currentAngle = velocitySlider.getValue();
+        currentAngle = velocitySlider.angle;
+    }
+
+    public void DrawCannon(Canvas canvas)
+    {
+
+        canvas.save();
+        {
+            canvas.rotate(currentAngle + 27, centre.x, centre.y);
+            canvas.drawBitmap(cannonImage, null, cannonRect, paint);
+        }
+        canvas.restore();
+        canvas.drawBitmap(carriageImage, null, carriageRect, paint);
     }
 
     public void Draw(Canvas canvas)
     {
+
         velocitySlider.draw(canvas);
-        canvas.save();
-        {
-            canvas.rotate(-currentAngle + 27, centre.x, centre.y);
-            canvas.drawBitmap(cannonImage, null, cannonRect, paint);
-        }
-        canvas.restore();
     }
 }

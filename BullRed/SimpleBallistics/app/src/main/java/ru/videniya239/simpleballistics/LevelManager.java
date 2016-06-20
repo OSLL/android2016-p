@@ -1,5 +1,7 @@
 package ru.videniya239.simpleballistics;
 
+import android.graphics.Rect;
+
 import junit.framework.Assert;
 
 import java.util.ArrayList;
@@ -70,8 +72,28 @@ public class LevelManager
     private void CreateLevels()
     {
         Level level1 = new Level();
-        level1.Init(MainActivity.level1Texture, MainActivity.level1Map, 0);
+        level1.Init(MainActivity.level1Texture, MainActivity.level1Map, 50,
+                new Rect((int)(GameController.screenWidth * 14f / 700f),
+                         (int)(GameController.screenHeight * 253f / 349f),
+                        (int)(GameController.screenWidth * 73f / 700f),
+                        (int)(GameController.screenHeight * 289f / 349f)),
+                new Rect((int)(GameController.screenWidth * 19f / 700f),
+                        (int)(GameController.screenHeight * 239f / 349f),
+                        (int)(GameController.screenWidth * 81f / 700f),
+                        (int)(GameController.screenHeight * 272f / 349f)));
         levels.add(level1);
+
+        /*Level level1 = new Level();
+        level1.Init(MainActivity.level1Texture, MainActivity.level1Map, 50,
+                new Rect((int)(GameController.screenWidth * 14f / 700f),
+                        (int)(GameController.screenHeight * 253f / 349f),
+                        (int)(GameController.screenWidth * 73f / 700f),
+                        (int)(GameController.screenHeight * 289f / 349f)),
+                new Rect((int)(GameController.screenWidth * 19f / 700f),
+                        (int)(GameController.screenHeight * 239f / 349f),
+                        (int)(GameController.screenWidth * 81f / 700f),
+                        (int)(GameController.screenHeight * 272f / 349f)));
+        levels.add(level1);*/
 
        /* Level level2 = new Level();
         level2.Init(MainActivity.level1Texture, MainActivity.level1Map, 0);
@@ -81,6 +103,7 @@ public class LevelManager
     public void Reset()
     {
         currentLevelNumber = 0;
+        Initialize();
     }
 
     public void SetLevel(int number)

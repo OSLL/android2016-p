@@ -1,5 +1,6 @@
 package ru.videniya239.simpleballistics;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +13,18 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
+    public static Bitmap carriageImage;
     private GameController gameController;
     private GestureDetector gestureDetector;
     public static Bitmap startMenuImage;
     public static Bitmap cannon;
+    public static Bitmap arrow;
+
+    public static Bitmap win;
+    public static Bitmap settings;
+
    /* private static MainActivity instance;
 
     public static MainActivity getInstance() {
@@ -53,13 +60,30 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView level1TextureView = (ImageView) findViewById(R.id.levelt1);
         level1Texture = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelt1);
+
+        ImageView arrowImage = (ImageView) findViewById(R.id.arrow);
+        arrow = BitmapFactory.decodeResource(this.getResources(), R.drawable.arrow);
+
+
+        ImageView winView = (ImageView) findViewById(R.id.win);
+        win = BitmapFactory.decodeResource(this.getResources(), R.drawable.win);
+
+        ImageView settingsView = (ImageView) findViewById(R.id.settings);
+        settings = BitmapFactory.decodeResource(this.getResources(), R.drawable.settings);
+
+        ImageView carriageView = (ImageView) findViewById(R.id.carriage);
+        carriageImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.carriage);
       //  BitmapFactory.decodeResource(activity)
+
+
 
        // GameController.Init(this);
        // setContentView(GameController.GetInstance());
 
 
         gameController = new GameController(this);
+
+        //LevelManager.GetInstance().Reset();
         //GameController.Init(this);
         //setContentView(GameController.GetInstance());
        setContentView(gameController);
@@ -83,6 +107,15 @@ public class MainActivity extends AppCompatActivity {
         gameController.releaseResources();
     } // end method onDestroy
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        //GameController.drawThread.setRunning(true);
+        gameController = new GameController(this);
+        //gameController.surfaceCreated();
+        //GameController.drawThread.setRunning(true);
+    }
 
 
     @Override

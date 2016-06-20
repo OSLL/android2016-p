@@ -24,10 +24,21 @@ public class Bullet
     float vY;
     float vwX;//скорость ветра
     float vwY;
-    float posX;//текущая координата снаряда
-    float posY;
+    private float posX;//текущая координата снаряда (в метрах)
+    private float posY;
     float posX0;//начальная координата снаряда
     float posY0;
+
+     public float getPosX()
+     {
+         return posX / w_m * w;
+     }
+
+    public float getPosY()
+    {
+        return posY / w_m * w;
+    }
+
 
     float alpha;
     float modV;//модуль начальной скорости
@@ -52,13 +63,21 @@ public class Bullet
     private float currentTime;
 
 
-    public Bullet(float velocity, float angle, Vector2 startPos)
+    public Bullet(float velocity, float angle, Vector2 startPos, float windVelocity)
     {
+
         modV = velocity;
+        modVw = windVelocity;
         alpha = angle;
-        posX = startPos.x;
-        posY = startPos.y;
+        w = GameController.screenWidth; //получаем разрешение экранчика
+        h = GameController.screenHeight;
+
+
+        Log.d("Bullet ", startPos.x + " " + startPos.y);
         Init();
+        posX = startPos.x * w_m / w;
+        posY = startPos.y * w_m / w;
+
     }
 
     public Body GetBody()
@@ -68,18 +87,12 @@ public class Bullet
 
     public void Init()
     {
-        paint.setColor(Color.WHITE);
-        w = GameController.screenWidth; //получаем разрешение экранчика
-        h = GameController.screenHeight;
+
+        Log.d("Bullet ", modV + " " + modVw + " " + alpha);
 
 
-
-
-        w_m = 300;//условные размеры экрана в метрах
-        h_m = w_m/w*h;
-        gX = 0;
-        //gY = 10f/w_m*w;
-        gY = 10;
+        w_m = 500;//условные размеры экрана в метрах
+        gY = 10;//м/с^2
         drawRadius  = (int)(drawRadius * w / w_m);
         //v [300, 400] м/с
         //вот эта параша должна вводиться
@@ -141,12 +154,15 @@ public class Bullet
 
     public void Update(float deltaT)
     {
-       /* currentTime += deltaT;
+
+        //Log.d("Bullet1", "" + posX + " " + posY);
+
+        currentTime += deltaT;
         if (currentTime > 300)
         {
-            LevelManager.GetInstance().GetCurrentLevel().traectory.add(new Vector2(posX, posY));
+            LevelManager.GetInstance().GetCurrentLevel().traectory.add(new Vector2(getPosX(), getPosY()));
             currentTime = 0;
-        }*/
+        }
 
 
         aX = -Math.signum(vX)*(Cf*Ro*S* (vX + (-vwX))*(vX + (-vwX)) /2)/m;//находим значение ускорения в данный момент времени
@@ -155,16 +171,14 @@ public class Bullet
         vX = vX + (deltaT/1000) * aX;//находим значение скорости в данный момент времени
         vY = vY + (deltaT/1000) * aY;
 
-        Log.d("delta", "" + deltaT);
-
-        posX = posX + (deltaT/1000) * vX /w_m*w;//считая, что движение равномерное на deltaT находим новое положение снаряда
-        posY = posY + (deltaT/1000) * vY /w_m*w;
+        posX = posX + (deltaT/1000) * vX ;//считая, что движение равномерное на deltaT находим новое положение снаряда
+        posY = posY + (deltaT/1000) * vY;
     }
 
     public void Draw(Canvas canvas)
     {
-        paint.setColor(Color.WHITE);
-            canvas.drawCircle(posX, posY, drawRadius, paint);
+        paint.setColor(Color.BLACK);
+            canvas.drawCircle(posX /w_m*w , posY /w_m*w, drawRadius, paint);
             Log.d("Bullet", "" + posX + " " + posY);
     }
 
