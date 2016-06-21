@@ -4,12 +4,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
-public class WinGameState implements IGameState, Menu
+public class EndGameState implements IGameState, Menu
 {
     private Button exitButton;
     private Button restartButton;
     private Button menuButton;
     private BackTexture win;
+    private BackTexture lose;
     private Paint paint;
 
     @Override
@@ -20,7 +21,10 @@ public class WinGameState implements IGameState, Menu
     @Override
     public void Draw(Canvas canvas)
     {
-        win.draw(canvas, paint);
+        if (!LevelManager.GetInstance().lose)
+            win.draw(canvas, paint);
+        else
+            lose.draw(canvas, paint);
     }
 
 
@@ -36,6 +40,7 @@ public class WinGameState implements IGameState, Menu
                 GameController.screenWidth*(812f/850f), GameController.screenHeight*(477f/501f), ButtonName.MenuButton);
         menuButton.attach(this);
         win = new BackTexture(MainActivity.win);
+        lose = new BackTexture(MainActivity.lose);
         //Log.d("Exit1", "stop");
     }
 

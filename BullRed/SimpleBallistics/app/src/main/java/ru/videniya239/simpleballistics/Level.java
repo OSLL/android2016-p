@@ -38,7 +38,23 @@ public class Level //implements Menu
         paint = new Paint();
         paint.setColor(Color.WHITE);
 
-        cannon = new Cannon(45, nail, cannonRect, carriageRect);
+        cannon = new Cannon(45, nail);//, cannonRect, carriageRect);
+
+        if (id == 1) {
+            cannon.velocitySlider.firstUp = true;
+        }
+    }
+    public void Init(Bitmap background, Bitmap levelMap, float windVelocity, Vector2 trans, int id)
+    {
+        this.background = new BackTexture(background);
+        this.levelMap = levelMap;
+
+        this.windVelocity = windVelocity;
+        traectory = new ArrayList<>();
+        paint = new Paint();
+        paint.setColor(Color.WHITE);
+
+        cannon = new Cannon(45, trans);
 
         if (id == 1)
         {
@@ -56,6 +72,7 @@ public class Level //implements Menu
         if (!bulletFlying)
         {
             bullet = cannon.CreateBullet(windVelocity);
+            LifeManager.getInstance().changeLives(-1);
             bulletFlying = true;
         }
     }
@@ -63,13 +80,16 @@ public class Level //implements Menu
     public void Draw(Canvas canvas)
     {
         background.draw(canvas);
+        LifeManager.getInstance().Draw(canvas);
         cannon.DrawCannon(canvas);
-        if (!bulletFlying) {
+        if (!bulletFlying)
+        {
             cannon.Draw(canvas);
         }
         if (bulletFlying)
         {
-            if (bullet != null) {
+            if (bullet != null)
+            {
                 paint.setColor(Color.WHITE);
 
                 for (Vector2 position : traectory) {
@@ -79,28 +99,32 @@ public class Level //implements Menu
                 bullet.Draw(canvas);
             }
         }
-
     }
 
     public void Update(float deltaT)
     {
         if (!bulletFlying)
         {
-            if (cannon != null) {
+            if (cannon != null)
+            {
                 cannon.Update();
             }
         }
         else
         {
-            if (bullet != null) {
+            if (bullet != null)
+            {
                 for (int i = 0; i < 360 / checkAngle; i++)
                 {
                     Vector2 checkPoint = getCheckCoord(checkAngle * i);
-                    if (insideScreen(checkPoint.x, checkPoint.y)) {
-                        if (!CheckColor(checkPoint)) {
+                    if (insideScreen(checkPoint.x, checkPoint.y))
+                    {
+                        if (!CheckColor(checkPoint))
+                        {
                             bullet.Update(deltaT);
                             break;
-                        } else {
+                        } else
+                        {
                             break;
                         }
                     } else {
@@ -126,11 +150,11 @@ public class Level //implements Menu
             return true;
         }
 
-        if (Color.red(getMapPixel((int)pos.x, (int)pos.y)) >= 250) {
+        if (Color.red(getMapPixel((int)pos.x, (int)pos.y)) >= 200) {
             onTarget();
             return true;
         }
-        if (Color.green(getMapPixel((int)pos.x, (int)pos.y)) > 250) {
+        if (Color.green(getMapPixel((int)pos.x, (int)pos.y)) > 200) {
             miss();
             return true;
         }
@@ -145,6 +169,15 @@ public class Level //implements Menu
         bulletFlying = false;
         traectory.clear();
         bullet = null;
+        if (LifeManager.getInstance().getLives() == 0)
+        {
+            LevelManager.GetInstance().lose = true;
+            cannon.Deactivate();
+            Log.d("level", "level finished: " + LevelManager.GetInstance().GetCurrentLevelNumber());
+            //GameController.DetachButton(shootButton);
+            GameController.DetachSlider(cannon.velocitySlider);
+            GameController.setGamePhase(GameState.PHASE_RESULT);
+        }
     }
 
     private void onTarget()

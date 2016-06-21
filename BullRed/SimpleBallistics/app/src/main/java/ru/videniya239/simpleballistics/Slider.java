@@ -34,14 +34,14 @@ public class Slider
     private Vector2 startPoint;
     private Vector2 radiusSlider;
 
-    public Slider(Rect sliderRect, Rect cursorRect, int minValue, int maxValue, int startValue, int startAngle,
+    public Slider(Rect sliderRect, int minValue, int maxValue, int startValue, int startAngle,
                   Vector2 centre, Vector2 startPoint, Vector2 radiusSlider)
     {
         this.sliderRect = sliderRect;
-        this.cursorRect = cursorRect;
+
         this.minValue = minValue;
         this.maxValue = maxValue;
-        this.horz = horz;
+
         paint = new Paint();
         this.centre = centre;
         this.startPoint = startPoint;
@@ -54,24 +54,23 @@ public class Slider
         this.radiusSlider = radiusSlider;
 
         sliderCollider = new Collider(sliderRect);
-        offsetX = cursorRect.centerX() - cursorRect.left;
-        offsetY = cursorRect.centerY() - cursorRect.top;
+// offsetX = cursorRect.centerX() - cursorRect.left;
+        // offsetY = cursorRect.centerY() - cursorRect.top;
 
         velocityKoeff = GameController.screenWidth / 150000;
 
 
         tapPosition = centre;
-        /*if (horz)
-        {
-            sliderCollider = new Collider(new Rect(sliderRect.left + offsetX / 2, sliderRect.top - offsetY,
-                    sliderRect.right - offsetX / 2, sliderRect.bottom + offsetY));
-        }*/
+ /*if (horz)
+ {
+ sliderCollider = new Collider(new Rect(sliderRect.left + offsetX / 2, sliderRect.top - offsetY,
+ sliderRect.right - offsetX / 2, sliderRect.bottom + offsetY));
+ }*/
 
         //GameController.AttachSlider(this);
 
         //updateCursorRect();
     }
-
 
     private void updateCursorRect()
     {

@@ -23,7 +23,11 @@ public class MainActivity extends Activity {
     public static Bitmap arrow;
 
     public static Bitmap win;
+    public static Bitmap lose;
     public static Bitmap settings;
+
+    public static Bitmap[] numbers;
+    public static Bitmap bullets;
 
    /* private static MainActivity instance;
 
@@ -37,6 +41,12 @@ public class MainActivity extends Activity {
     public static Bitmap level1Texture;
     public static Bitmap level2Map;
     public static Bitmap level2Texture;
+    public static Bitmap level3Map;
+    public static Bitmap level3Texture;
+    public static Bitmap level4Map;
+    public static Bitmap level4Texture;
+    public static Bitmap level5Map;
+    public static Bitmap level5Texture;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -69,6 +79,24 @@ public class MainActivity extends Activity {
         ImageView level2TextureView = (ImageView) findViewById(R.id.levelt2);
         level2Texture = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelt2);
 
+        ImageView level3ImageView = (ImageView) findViewById(R.id.levelm3);
+        level3Map = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelm3);
+
+        ImageView level3TextureView = (ImageView) findViewById(R.id.levelt3);
+        level3Texture = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelt3);
+
+        ImageView level4ImageView = (ImageView) findViewById(R.id.levelm4);
+        level4Map = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelm4);
+
+        ImageView level4TextureView = (ImageView) findViewById(R.id.levelt4);
+        level4Texture = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelt4);
+
+        ImageView level5ImageView = (ImageView) findViewById(R.id.levelm5);
+        level5Map = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelm5);
+
+        ImageView level5TextureView = (ImageView) findViewById(R.id.levelt5);
+        level5Texture = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelt5);
+
 
         ImageView arrowImage = (ImageView) findViewById(R.id.arrow);
         arrow = BitmapFactory.decodeResource(this.getResources(), R.drawable.arrow);
@@ -77,11 +105,49 @@ public class MainActivity extends Activity {
         ImageView winView = (ImageView) findViewById(R.id.win);
         win = BitmapFactory.decodeResource(this.getResources(), R.drawable.win);
 
+        ImageView gameOverView = (ImageView) findViewById(R.id.gameover);
+        lose = BitmapFactory.decodeResource(this.getResources(), R.drawable.gameover);
+
         ImageView settingsView = (ImageView) findViewById(R.id.settings);
         settings = BitmapFactory.decodeResource(this.getResources(), R.drawable.settings);
 
         ImageView carriageView = (ImageView) findViewById(R.id.carriage);
         carriageImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.carriage);
+
+
+        numbers = new Bitmap[10];
+        ImageView oneImage = (ImageView) findViewById(R.id.one);
+        numbers[1] = BitmapFactory.decodeResource(this.getResources(), R.drawable.one);
+
+        ImageView twoView = (ImageView) findViewById(R.id.two);
+        numbers[2] = BitmapFactory.decodeResource(this.getResources(), R.drawable.two);
+
+        ImageView threeView = (ImageView) findViewById(R.id.three);
+        numbers[3] = BitmapFactory.decodeResource(this.getResources(), R.drawable.three);
+
+        ImageView fourView = (ImageView) findViewById(R.id.four);
+        numbers[4] = BitmapFactory.decodeResource(this.getResources(), R.drawable.four);
+
+        ImageView fiveView = (ImageView) findViewById(R.id.five);
+        numbers[5] = BitmapFactory.decodeResource(this.getResources(), R.drawable.five);
+
+        ImageView sixView = (ImageView) findViewById(R.id.six);
+        numbers[6] = BitmapFactory.decodeResource(this.getResources(), R.drawable.six);
+
+        ImageView sevenView = (ImageView) findViewById(R.id.seven);
+        numbers[7] = BitmapFactory.decodeResource(this.getResources(), R.drawable.seven);
+
+        ImageView eightView = (ImageView) findViewById(R.id.eight);
+        numbers[8] = BitmapFactory.decodeResource(this.getResources(), R.drawable.eight);
+
+        ImageView nineView = (ImageView) findViewById(R.id.nine);
+        numbers[9] = BitmapFactory.decodeResource(this.getResources(), R.drawable.nine);
+
+        ImageView zeroView = (ImageView) findViewById(R.id.zero);
+        numbers[0] = BitmapFactory.decodeResource(this.getResources(), R.drawable.zero);
+
+        ImageView bulletsView = (ImageView) findViewById(R.id.bullets);
+        bullets = BitmapFactory.decodeResource(this.getResources(), R.drawable.bullets);
       //  BitmapFactory.decodeResource(activity)
 
 

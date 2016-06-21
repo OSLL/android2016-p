@@ -3,6 +3,7 @@ package ru.videniya239.simpleballistics;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 
 import junit.framework.Assert;
@@ -14,11 +15,17 @@ public class PlayGameState implements IGameState
     private LevelManager levelManager;
     private Paint paint;
 
+    private int deltaLives = 3;
+    private int startLives = 5;
+
 
     @Override
     public void Update(float deltaT)
     {
-        levelManager.GetCurrentLevel().Update(deltaT);
+        if (levelManager.GetCurrentLevelNumber() >= 0)
+        {
+            levelManager.GetCurrentLevel().Update(deltaT);
+        }
     }
 
     @Override
@@ -41,7 +48,14 @@ public class PlayGameState implements IGameState
 
         if (levelManager.GetCurrentLevelNumber() < levelManager.GetLevelCount())
         {
-
+            if (levelManager.GetCurrentLevelNumber() == 0)
+            {
+                LifeManager.getInstance().Init(startLives, new Rect(0, 0, (int) (GameController.screenWidth * 48f / 1280f),
+                        (int) (GameController.screenHeight * 76f / 628f)));
+            }
+            else {
+                LifeManager.getInstance().changeLives(deltaLives);
+            }
             levelManager.MoveNext();
             Log.d("levelmanager", "" + levelManager.GetCurrentLevelNumber());
         }

@@ -2,20 +2,15 @@ package ru.videniya239.simpleballistics;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Timer;
 
 enum GameState
 {
@@ -47,6 +42,8 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
     private final int QUIT_KEY = 1;
     private final int NEW_GAME_KEY = 0;
 
+
+
 	//private static GameController instance;
 	public GameController(Context context)
 	{
@@ -69,6 +66,7 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 		//instance.Init();
 
 		sliders.clear();
+
 		//LevelManager.GetInstance().Initialize();
 		LevelManager.GetInstance().Reset();
 	}
@@ -104,7 +102,7 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 				currentState = new PlayGameState();
 				break;
 			case PHASE_RESULT:
-				currentState = new WinGameState();
+				currentState = new EndGameState();
 				break;
 			case PHASE_SETTINGS:
 				currentState = new SettingsGameState();
@@ -124,7 +122,6 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	{
 		super.draw(canvas);
 		//Log.d("Cont", "Draw");
-
 		if (firstCall)
 		{
 			firstCall = false;
@@ -139,11 +136,12 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	private float getDeltaT()
 	{
 
-		currentTimeMillis = System.currentTimeMillis();
+		/*currentTimeMillis = System.currentTimeMillis();
 		float deltaT = currentTimeMillis - lastTimeMillis;
 		//Log.d("time", "" + System.currentTimeMillis() + " " + lastTimeMillis + " " + deltaT);
 		lastTimeMillis = currentTimeMillis;
-		return deltaT;
+		return deltaT;*/
+		return 50;
 	}
 
 	public static void stopGame()
