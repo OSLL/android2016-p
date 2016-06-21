@@ -52,7 +52,17 @@ public class WinGameState implements IGameState, Menu
 
     private void RestartGame()
     {
+        close();
+        Log.d("button", "restart");
         LevelManager.GetInstance().Reset();
+        //GameController.InitNewGame();
+        GameController.setGamePhase(GameState.PHASE_PLAY);
+    }
+
+    private void close()
+    {
+        GameController.DetachButton(menuButton);
+        GameController.DetachButton(restartButton);
     }
 
     @Override
@@ -72,7 +82,10 @@ public class WinGameState implements IGameState, Menu
 
     private void menuButtonTapped()
     {
-        RestartGame();
+        close();
+        //RestartGame();
+        LevelManager.GetInstance().Reset();
+        GameController.InitNewGame();
         GameController.setGamePhase(GameState.PHASE_NEW_GAME);
     }
     private void restartButtonTapped()

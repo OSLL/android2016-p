@@ -35,6 +35,8 @@ public class MainActivity extends Activity {
 
     public static Bitmap level1Map;
     public static Bitmap level1Texture;
+    public static Bitmap level2Map;
+    public static Bitmap level2Texture;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -60,6 +62,13 @@ public class MainActivity extends Activity {
 
         ImageView level1TextureView = (ImageView) findViewById(R.id.levelt1);
         level1Texture = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelt1);
+
+        ImageView level2ImageView = (ImageView) findViewById(R.id.levelm2);
+        level2Map = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelm2);
+
+        ImageView level2TextureView = (ImageView) findViewById(R.id.levelt2);
+        level2Texture = BitmapFactory.decodeResource(this.getResources(), R.drawable.levelt2);
+
 
         ImageView arrowImage = (ImageView) findViewById(R.id.arrow);
         arrow = BitmapFactory.decodeResource(this.getResources(), R.drawable.arrow);

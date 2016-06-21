@@ -63,10 +63,14 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 		return instance;
 	}*/
 
-	public static void Init(Context context)
+	public static void InitNewGame()
 	{
 		//instance = new GameController(context);
 		//instance.Init();
+
+		sliders.clear();
+		//LevelManager.GetInstance().Initialize();
+		LevelManager.GetInstance().Reset();
 	}
 
 	private void Init()
@@ -75,6 +79,8 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 		buttons = new ArrayList<>();
 		sliders = new ArrayList<>();
 		paint.setColor(Color.WHITE);
+		//LevelManager.GetInstance().Initialize();
+		InitNewGame();
 		setGamePhase(GameState.PHASE_NEW_GAME);
 		lastTimeMillis = System.currentTimeMillis();
 
@@ -185,6 +191,7 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	}
 	public static void AttachSlider(Slider slider)
 	{
+		Log.d("sld", "tt");
 		sliders.add(slider);
 	}
 	public static void DetachSlider(Slider slider)

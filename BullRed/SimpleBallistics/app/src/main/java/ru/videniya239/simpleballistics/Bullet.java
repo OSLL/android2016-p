@@ -92,6 +92,7 @@ public class Bullet
 
 
         w_m = 500;//условные размеры экрана в метрах
+        h_m = w_m * GameController.screenHeight / GameController.screenWidth;
         gY = 10;//м/с^2
         drawRadius  = (int)(drawRadius * w / w_m);
         //v [300, 400] м/с
@@ -178,7 +179,7 @@ public class Bullet
     public void Draw(Canvas canvas)
     {
         paint.setColor(Color.BLACK);
-            canvas.drawCircle(posX /w_m*w , posY /w_m*w, drawRadius, paint);
+            canvas.drawCircle(posX /w_m*w , posY /h_m * h, drawRadius, paint);
             Log.d("Bullet", "" + posX + " " + posY);
     }
 
