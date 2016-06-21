@@ -22,6 +22,8 @@ public class StartGameState implements IGameState
     {
         startMenu = new StartMenu();
         startMenu.show();
+
+        GameController.InitNewGame();
     }
 
     @Override

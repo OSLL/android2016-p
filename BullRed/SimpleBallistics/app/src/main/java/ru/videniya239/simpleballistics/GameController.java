@@ -23,6 +23,7 @@ enum GameState
 	PHASE_PLAY,
 	PHASE_END_LEVEL,
 	PHASE_RESULT,
+	PHASE_SETTINGS
 }
 
 public class GameController extends SurfaceView implements SurfaceHolder.Callback
@@ -52,6 +53,7 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 		super(context);
 		getHolder().addCallback(this);
 		activity = (Activity)context;
+		//drawThread.setRunning(true);
 		//instance = this;
 		//Init();
 	}
@@ -61,10 +63,14 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 		return instance;
 	}*/
 
-	public static void Init(Context context)
+	public static void InitNewGame()
 	{
 		//instance = new GameController(context);
 		//instance.Init();
+
+		sliders.clear();
+		//LevelManager.GetInstance().Initialize();
+		LevelManager.GetInstance().Reset();
 	}
 
 	private void Init()
@@ -73,6 +79,8 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 		buttons = new ArrayList<>();
 		sliders = new ArrayList<>();
 		paint.setColor(Color.WHITE);
+		//LevelManager.GetInstance().Initialize();
+		InitNewGame();
 		setGamePhase(GameState.PHASE_NEW_GAME);
 		lastTimeMillis = System.currentTimeMillis();
 
@@ -97,6 +105,9 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 				break;
 			case PHASE_RESULT:
 				currentState = new WinGameState();
+				break;
+			case PHASE_SETTINGS:
+				currentState = new SettingsGameState();
 				break;
 		}
 
@@ -156,7 +167,10 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 				notifyButtons(new Vector2(event.getX(), event.getY()));
 				break;
 			case ACTION_UP:
-
+				for (Slider slider : sliders)
+				{
+					slider.onUp();
+				}
 				break;
 			case ACTION_MOVE:
 				Log.d("Input", "Move");
@@ -177,9 +191,10 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	}
 	public static void AttachSlider(Slider slider)
 	{
+		Log.d("sld", "tt");
 		sliders.add(slider);
 	}
-	public static void DetachSlideer(Slider slider)
+	public static void DetachSlider(Slider slider)
 	{
 		sliders.remove(slider);
 	}
@@ -209,7 +224,7 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 
 	}
 
-	private static DrawThread drawThread;
+	public static DrawThread drawThread;
 	@Override
 	public void surfaceCreated(SurfaceHolder surfaceHolder)
 	{

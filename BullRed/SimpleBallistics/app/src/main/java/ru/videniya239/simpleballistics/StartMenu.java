@@ -13,7 +13,7 @@ interface Menu
 enum ButtonName
 {
     // you should enumerate button names here
-    PlayButton, ExitButton, InfoButton, SettingsButton, ShootButton, SliderButton;
+    PlayButton, ExitButton, InfoButton, SettingsButton, ShootButton, SliderButton, RestartButton, MenuButton;
 }
 
 
@@ -36,6 +36,7 @@ public class StartMenu implements Menu
         GameController.DetachButton(infoButton);
         GameController.DetachButton(exitButton);
         GameController.DetachButton(settingsButton);
+
     }
 
     @Override
@@ -107,7 +108,7 @@ public class StartMenu implements Menu
     }
     private void settingsButtonTapped()
     {
-
+        GameController.setGamePhase(GameState.PHASE_SETTINGS);
     }
 
 }

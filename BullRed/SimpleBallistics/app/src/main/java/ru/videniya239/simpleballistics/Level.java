@@ -10,23 +10,25 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class Level implements Menu
+public class Level //implements Menu
 {
     private Cannon cannon;
     private Bullet bullet;
     private Paint paint;
     private BackTexture background;
     private Bitmap levelMap;
-    private Button shootButton;
+    //private Button shootButton;
 
     private final int checkAngle = 60;
+
+
 
     private boolean bulletFlying;
     private float windVelocity;
 
     public static ArrayList<Vector2> traectory;
 
-    public void Init(Bitmap background, Bitmap levelMap, float windVelocity)
+    public void Init(Bitmap background, Bitmap levelMap, float windVelocity, Rect carriageRect, Rect cannonRect, Vector2 nail, int id)
     {
         this.background = new BackTexture(background);
         this.levelMap = levelMap;
@@ -36,61 +38,75 @@ public class Level implements Menu
         paint = new Paint();
         paint.setColor(Color.WHITE);
 
-        cannon = new Cannon(45, new Vector2(130, GameController.screenHeight - 480),
-                new Rect(0, (int)GameController.screenHeight - 600, 200, (int)GameController.screenHeight - 400));
+        cannon = new Cannon(45, nail, cannonRect, carriageRect);
+
+        if (id == 1)
+        {
+            cannon.velocitySlider.firstUp = true;
+        }
     }
     public void Start()
     {
-        shootButton = new Button(0, 0, 300, 300, ButtonName.ShootButton);
-        shootButton.attach(this);
         cannon.Activate();
     }
 
     public void Shoot()
     {
-        bullet = cannon.CreateBullet();
-        bullet.modVw = windVelocity;
-        bulletFlying = true;
+
+        if (!bulletFlying)
+        {
+            bullet = cannon.CreateBullet(windVelocity);
+            bulletFlying = true;
+        }
     }
 
     public void Draw(Canvas canvas)
     {
         background.draw(canvas);
+        cannon.DrawCannon(canvas);
+        if (!bulletFlying) {
+            cannon.Draw(canvas);
+        }
         if (bulletFlying)
         {
+            if (bullet != null) {
                 paint.setColor(Color.WHITE);
-                bullet.Draw(canvas);
-           /* for (Vector2 position : traectory) {
-                canvas.drawCircle(position.x, position.y, 15.0f, paint);
-            }*/
 
+                for (Vector2 position : traectory) {
+                    paint.setColor(Color.GRAY);
+                    canvas.drawCircle(position.x, position.y, bullet.drawRadius / 2, paint);
+                }
+                bullet.Draw(canvas);
+            }
         }
-        cannon.Draw(canvas);
+
     }
 
     public void Update(float deltaT)
     {
-        cannon.Update();
-        if (bulletFlying)
+        if (!bulletFlying)
         {
-            for (int i = 0; i < 360 / checkAngle; i++)
-            {
-                Vector2 checkPoint = getCheckCoord(checkAngle * i);
-                if (insideScreen(checkPoint.x, checkPoint.y))
+            if (cannon != null) {
+                cannon.Update();
+            }
+        }
+        else
+        {
+            if (bullet != null) {
+                for (int i = 0; i < 360 / checkAngle; i++)
                 {
-                    if (!CheckColor(checkPoint))
-                    {
-                        bullet.Update(deltaT);
+                    Vector2 checkPoint = getCheckCoord(checkAngle * i);
+                    if (insideScreen(checkPoint.x, checkPoint.y)) {
+                        if (!CheckColor(checkPoint)) {
+                            bullet.Update(deltaT);
+                            break;
+                        } else {
+                            break;
+                        }
+                    } else {
+                        miss();
                         break;
                     }
-                    else
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    miss();
                 }
             }
         }
@@ -98,38 +114,49 @@ public class Level implements Menu
 
     private Vector2 getCheckCoord(int angle)
     {
-        return new Vector2(bullet.posX + (float)Math.cos(angle * Math.PI / 180) * bullet.drawRadius,
-                bullet.posY + (float)Math.sin(angle * Math.PI / 180) * bullet.drawRadius);
+        return new Vector2(bullet.getPosX() + (float)Math.cos(angle * Math.PI / 180) * bullet.drawRadius,
+                bullet.getPosY() + (float)Math.sin(angle * Math.PI / 180) * bullet.drawRadius);
     }
 
     private boolean CheckColor(Vector2 pos)
     {
+        if (cannon.cannonRect.contains((int)pos.x, (int)pos.y) || (cannon.carriageRect.contains((int)pos.x, (int)pos.y)))
+        {
+            miss();
+            return true;
+        }
+
         if (Color.red(getMapPixel((int)pos.x, (int)pos.y)) >= 250) {
             onTarget();
             return true;
         }
-        if (Color.green(getMapPixel((int)pos.x, (int)pos.y)) <= 250) {
-            return false;
+        if (Color.green(getMapPixel((int)pos.x, (int)pos.y)) > 250) {
+            miss();
+            return true;
         }
         else
         {
-            miss();
-            return true;
+             return false;
         }
     }
 
     private void miss()
     {
         bulletFlying = false;
+        traectory.clear();
+        bullet = null;
     }
 
     private void onTarget()
     {
         bulletFlying = false;
+        traectory.clear();
+        bullet = null;
         cannon.Deactivate();
-        Log.d("level", "" + LevelManager.GetInstance().GetCurrentLevelNumber());
-        GameController.DetachButton(shootButton);
-        GameController.setGamePhase(GameState.PHASE_END_LEVEL);
+        Log.d("level", "level finished: " + LevelManager.GetInstance().GetCurrentLevelNumber());
+        //GameController.DetachButton(shootButton);
+        GameController.DetachSlider(cannon.velocitySlider);
+        GameController.setGamePhase(GameState.PHASE_PLAY);
     }
 
     private boolean insideScreen(float posX, float posY)
@@ -144,12 +171,12 @@ public class Level implements Menu
                                  y * levelMap.getHeight() / (int)GameController.screenHeight);
     }
 
-    @Override
+    /*@Override
     public void updateButtons(ButtonName b)
     {
         if (b == ButtonName.ShootButton)
         {
-            if (!bulletFlying)
+            if (!bulletFlying) //&& !cannon.velocitySlider.tapped)
                 Shoot();
         }
     }
@@ -158,5 +185,5 @@ public class Level implements Menu
     public void show()
     {
 
-    }
+    }*/
 }
