@@ -2,7 +2,6 @@ package ru.videniya239.simpleballistics;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
 interface Menu
 {
@@ -42,7 +41,6 @@ public class StartMenu implements Menu
     @Override
     public void updateButtons(ButtonName buttonName)
     {
-        //Log.d("ttt", "" + buttonName);
         switch(buttonName)
         {
             case PlayButton:

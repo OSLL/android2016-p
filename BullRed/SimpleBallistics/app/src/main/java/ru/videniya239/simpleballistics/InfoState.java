@@ -27,11 +27,10 @@ public class InfoState implements IGameState, Menu
     @Override
     public void InvokeState()
     {
-        //p
         menuButton = new Button(GameController.screenWidth*(15f/1280f), GameController.screenHeight*(500f/628f),
                 GameController.screenWidth*(124f/1280f), GameController.screenHeight*(613f/628f), ButtonName.MenuButton);
 
-
+        paint = new Paint();
         menuButton.attach(this);
         tutorial = new BackTexture(MainActivity.tutorial);
     }

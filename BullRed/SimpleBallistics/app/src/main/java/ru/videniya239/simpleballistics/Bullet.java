@@ -3,7 +3,6 @@ package ru.videniya239.simpleballistics;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 public class Bullet
 {
@@ -12,22 +11,22 @@ public class Bullet
 
     private Paint paint = new Paint();
 
-    float w; //WINDOWWIDTH
-    float h; //windowheight
+    private float w; //WINDOWWIDTH
+    private float h; //windowheight
 
-    float w_m;//условные размеры экрана в метрах
-    float h_m;
+    private float w_m;//условные размеры экрана в метрах
+    private float h_m;
 
-    float aX;//ускорение
-    float aY;
-    float vX;//скорость снаряд
-    float vY;
-    float vwX;//скорость ветра
-    float vwY;
+    private float aX;//ускорение
+    private float aY;
+    private float vX;//скорость снаряд
+    private float vY;
+    private float vwX;//скорость ветра
+    private float vwY;
     private float posX;//текущая координата снаряда (в метрах)
     private float posY;
-    float posX0;//начальная координата снаряда
-    float posY0;
+    private float posX0;//начальная координата снаряда
+    private float posY0;
 
      public float getPosX()
      {
@@ -45,14 +44,14 @@ public class Bullet
     float modVw;//модуль скорости ветра
 
 
-    float gX;//ускорение свободного падения
-    float gY;
+    private float gX;//ускорение свободного падения
+    private float gY;
 
-    float Ro;//плотность среды у воздуха 1.225 кг/м^3
-    float Cf;
-    float S; //площадь сечения ядра
-    float d;//диаметр ядра
-    float m;//масса ядра
+    private float Ro;//плотность среды у воздуха 1.225 кг/м^3
+    private float Cf;
+    private float S; //площадь сечения ядра
+    private float d;//диаметр ядра
+    private float m;//масса ядра
 
     int drawRadius = 3; //метры
 
@@ -72,13 +71,9 @@ public class Bullet
         w = GameController.screenWidth; //получаем разрешение экранчика
         h = GameController.screenHeight;
 
-
-        Log.d("Bullet ", startPos.x + " " + startPos.y);
         Init();
         posX = startPos.x * w_m / w;
         posY = startPos.y * w_m / w;
-        //currentTime = 500;
-
     }
 
     public Body GetBody()
@@ -88,10 +83,6 @@ public class Bullet
 
     public void Init()
     {
-
-        Log.d("Bullet ", modV + " " + modVw + " " + alpha);
-
-
         w_m = 500;//условные размеры экрана в метрах
         h_m = w_m * GameController.screenHeight / GameController.screenWidth;
         gY = 10;//м/с^2
@@ -144,11 +135,6 @@ public class Bullet
 
         vwX = -modVw;
 
-       // posX = 20;//начальное положение снаряда
-       // posY = h - 20;
-        //posX = 100;
-        //posY = h - 100;
-
         posX0 = posX;
         posY0 = posY;
 
@@ -156,9 +142,6 @@ public class Bullet
 
     public void Update(float deltaT)
     {
-
-        //Log.d("Bullet1", "" + posX + " " + posY);
-
         currentTime += deltaT;
         if (currentTime > 300)
         {
@@ -181,7 +164,6 @@ public class Bullet
     {
         paint.setColor(Color.BLACK);
             canvas.drawCircle(posX /w_m*w , posY /h_m * h, drawRadius, paint);
-            Log.d("Bullet", "" + posX + " " + posY);
     }
 
 

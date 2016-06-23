@@ -3,7 +3,6 @@ package ru.videniya239.simpleballistics;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
 public class LifeManager
 {
@@ -33,7 +32,6 @@ public class LifeManager
 
     public void changeLives(int delta)
     {
-        Log.d("lives", "" + lives);
         lives += delta;
     }
 
@@ -49,7 +47,7 @@ public class LifeManager
 
         if ((canvas != null) && (MainActivity.numbers != null))
         {
-            Vector2 livesTextPosition = new Vector2(GameController.screenWidth, 0);
+            //Vector2 livesTextPosition = new Vector2(GameController.screenWidth, 0);
             int tmpLife = lives;
             int i = 1;
             while (tmpLife >= 0) {
@@ -64,10 +62,6 @@ public class LifeManager
                 if (tmpLife == 0) {
                     break;
                 }
-                //Sprite currentBall = lifeBalls.ElementAt(i);
-                // currentBall.Transform.position = new Vector2();
-
-                //currentBall.Update(gameTime);
             }
             canvas.drawBitmap(MainActivity.bullets, null,
                     new Rect((int) GameController.screenWidth - (i - 1) * lifeRect.width() - lifeRect.width() * 3, 0,

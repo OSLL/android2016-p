@@ -1,8 +1,6 @@
 package ru.videniya239.simpleballistics;
 
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.util.Log;
 
 public class Button implements ITappable
 {
@@ -20,7 +18,6 @@ public class Button implements ITappable
     {
         this.collider = collider;
         name = buttonName;
-        //GameController.GetInstance().AttachButton(this);
     }
 
     public void attach(Menu menu)
@@ -36,7 +33,6 @@ public class Button implements ITappable
     @Override
     public boolean onTap(Vector2 position)
     {
-        //Log.d("button1", "" + name);
         if (collider.intersectsP((int)position.x, (int)position.y))
         {
             Notify();

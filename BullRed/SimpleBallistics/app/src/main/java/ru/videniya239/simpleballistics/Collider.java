@@ -19,15 +19,7 @@ public class Collider
 		curRed = 255;
 		paint.setARGB(255, 255, 0, 0);
 	}
-	
-	/*protected Collider(RectF rect)
-	{
-		this.rect = rect;
-		paint = new Paint();
-		curRed = 255;
-		paint.setARGB(255, 255, 0, 0);
-	}*/
-	
+
 	void changeColor()
 	{
 		curRed = Math.abs(curRed - 255);
@@ -49,10 +41,6 @@ public class Collider
 	
 	boolean intersectsP(float x, float y)
 	{
-		/*if (rect.contains(x, y))
-			return true;
-		else
-			return false;*/
 		return  (x > rect.left) && (x < rect.right) && (y > rect.top) && (y < rect.bottom);
 	}
 	

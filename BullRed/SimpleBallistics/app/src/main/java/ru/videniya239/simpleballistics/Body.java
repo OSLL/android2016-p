@@ -4,29 +4,21 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.Log;
 
 public class Body
 {
 	Vector2 pos = new Vector2(0,0);
 	Vector2 velocity;
-	float sizeH = 72;
-	float sizeW = 72;
-	float angle;
+	private float sizeH;
+	private float sizeW;
 	Bitmap image;
-	int value;
 	boolean canBeTapped = true;
-	boolean tapped = false;
-	
-	Body()
-	{
-	}
+
 	
 	Body(Bitmap image, float startX, float startY, float velocityX, float velocityY)
 	{
 		pos = new Vector2(startX, startY);
 		velocity = new Vector2(velocityX, velocityY);
-		angle = 0;
 		sizeH = image.getHeight();
 		sizeW = image.getWidth();
 		this.image = image;
@@ -36,7 +28,6 @@ public class Body
 	{
 		this.pos = new Vector2(pos);
 		this.velocity = new Vector2(velocity);
-		this.angle = 0;
 		if (image == null)
 		{
 			sizeH = size;
@@ -54,7 +45,6 @@ public class Body
 	{
 		this.pos = new Vector2(posx, posy);
 		this.velocity = new Vector2(velocityx, velocityy);
-		this.angle = 0;
 		this.sizeH = image.getHeight() * size;
 	    this.sizeW = image.getWidth() * size;
 		this.image = image;
@@ -79,21 +69,8 @@ public class Body
 	{
 		this.velocity.x = velocity.x;
 		this.velocity.y = velocity.y;
-		setAngle(velocity);
 	}
-	void setAngle(float angle)
-	{
-		this.angle = angle;
-	}
-	void setAngle(float x, float y)
-	{
-		angle = (float)(Math.atan2(y, x) / Math.PI * 180);
-	}
-	void setAngle(Vector2 dir)
-	{
-		angle = (float)(Math.atan2(dir.y, dir.x) / Math.PI * 180);
-	}
-	
+
 	void update(Vector2 F, float deltaT)
 	{
 		pos.plusMe(velocity.xR(deltaT));
@@ -103,11 +80,10 @@ public class Body
 	void draw(Canvas canvas, Paint paint, float w, float h)
 	{
 		
-			canvas.save();
-        Log.d("Test", image.toString());
-        canvas.drawBitmap(image, null, new RectF((float)pos.x, (float)(pos.y), (float)pos.x + w,
-					(float)pos.y + h), paint);
-			canvas.restore();
+		canvas.save();
+        canvas.drawBitmap(image, null, new RectF(pos.x, pos.y, pos.x + w,
+					pos.y + h), paint);
+		canvas.restore();
 			
 	}
 	

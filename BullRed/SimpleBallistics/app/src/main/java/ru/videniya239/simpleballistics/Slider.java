@@ -4,9 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
-
+//закоментированные строки относятся к слайдеру-ползунку (планируется добавить)
 public class Slider
 {
     public Rect sliderRect;
@@ -94,21 +93,10 @@ public class Slider
         if ((canvas != null) && (MainActivity.arrow != null))
         {
             paint.setColor(Color.BLACK);
-            //canvas.drawRect(sliderRect, paint);
-
-            //paint.setColor(Color.BLUE);
-        /*canvas.drawLine(sliderCollider.rect.right, sliderCollider.rect.top,
-                sliderCollider.rect.right, sliderCollider.rect.bottom, paint);*/
-            //canvas.drawRect(sliderCollider.rect, paint);
-            //paint.setColor(Color.MAGENTA);
-            //canvas.drawRect(cursorRect, paint);
-
             canvas.save();
-            // Log.d("slider", "" + value);
             canvas.rotate(angle, centre.x, centre.y);
             canvas.scale(value / (float) maxValue, 1, startPoint.x, startPoint.y);
             canvas.drawBitmap(MainActivity.arrow, null, sliderRect, paint);
-            //canvas.drawLine(centre.x, centre.y, tapPosition.x, tapPosition.y, paint);
             canvas.restore();
         }
 
@@ -116,8 +104,6 @@ public class Slider
 
     public void Activate()
     {
-
-        //firstUp = true;
     }
 
     public int getValue()
