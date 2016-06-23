@@ -37,38 +37,19 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	public static float screenWidth;
 	private Paint paint;
 
-	private long lastTimeMillis;
-	private long currentTimeMillis;
-
-    private final int QUIT_KEY = 1;
-    private final int NEW_GAME_KEY = 0;
-
-
-
+	//можно реализовать Singleton вместо static-полей, но тогда нужно продумывать процедуру
+	//инициализации (context)
 	//private static GameController instance;
 	public GameController(Context context)
 	{
 		super(context);
 		getHolder().addCallback(this);
 		activity = (Activity)context;
-		//drawThread.setRunning(true);
-		//instance = this;
-		//Init();
 	}
-
-	/*public static GameController GetInstance()
-	{
-		return instance;
-	}*/
 
 	public static void InitNewGame()
 	{
-		//instance = new GameController(context);
-		//instance.Init();
-
 		sliders.clear();
-
-		//LevelManager.GetInstance().Initialize();
 		LevelManager.GetInstance().Reset();
 	}
 
@@ -78,10 +59,9 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 		buttons = new ArrayList<>();
 		sliders = new ArrayList<>();
 		paint.setColor(Color.WHITE);
-		//LevelManager.GetInstance().Initialize();
 		InitNewGame();
 		setGamePhase(GameState.PHASE_NEW_GAME);
-		lastTimeMillis = System.currentTimeMillis();
+		//lastTimeMillis = System.currentTimeMillis();
 
 	}
 
@@ -125,7 +105,6 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	public void draw(Canvas canvas)
 	{
 		super.draw(canvas);
-		//Log.d("Cont", "Draw");
 		if (firstCall)
 		{
 			firstCall = false;
@@ -145,7 +124,7 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 		//Log.d("time", "" + System.currentTimeMillis() + " " + lastTimeMillis + " " + deltaT);
 		lastTimeMillis = currentTimeMillis;
 		return deltaT;*/
-		return 50;
+		return 50; //чтобы снаряд перемещался "быстрее" (т.к. условный размер экрана в метрах довольно большой)
 	}
 
 	public static void stopGame()
@@ -196,7 +175,6 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	}
 	public static void AttachSlider(Slider slider)
 	{
-		Log.d("sld", "tt");
 		sliders.add(slider);
 	}
 	public static void DetachSlider(Slider slider)

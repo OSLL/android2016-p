@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
 public class Cannon
 {
@@ -16,10 +15,10 @@ public class Cannon
     public Rect cannonRect;
     private Paint paint;
     public Rect carriageRect;
-    public Rect cannonRectPattern;
-    public Rect carriageRectPattern;
-    public Vector2 nailPattern;
-    public Vector2 displacing;
+    private Rect cannonRectPattern;
+    private Rect carriageRectPattern;
+    private Vector2 nailPattern;
+    private Vector2 displacing;
 
     public Cannon(float currentAngle, Vector2 translation)
     {
@@ -41,43 +40,40 @@ public class Cannon
         int offsetY = (int)GameController.screenHeight / 40;
         int offsetX = (int)GameController.screenWidth * 3 / 7;
         int radiusSliderX = cannonRect.width() * 5 / 7;
-        //radiusSliderX = 0;
-        Rect velocitySliderRect = new Rect((int) nailPos.x + radiusSliderX , (int) nailPos.y - offsetY, (int) nailPos.x + offsetX, (int) nailPos.y + offsetY);
+        Rect velocitySliderRect = new Rect((int) nailPos.x + radiusSliderX ,
+                (int) nailPos.y - offsetY, (int) nailPos.x + offsetX, (int) nailPos.y + offsetY);
 
 
-        velocitySlider = new Slider(velocitySliderRect, 20, 120, 60, 0, nailPos, new Vector2(nailPos.x + radiusSliderX, nailPos.y), new Vector2(radiusSliderX, 0));
+        velocitySlider = new Slider(velocitySliderRect, 20, 120, 60, 0, nailPos,
+                new Vector2(nailPos.x + radiusSliderX, nailPos.y), new Vector2(radiusSliderX, 0));
     }
 
     private void InitialazeRect()
     {
-        cannonRectPattern = new Rect(0, 0, (int)(GameController.screenWidth*62f/700f), (int)(GameController.screenHeight*33f/349f));
-        carriageRectPattern = new Rect(0, 0, (int)(GameController.screenWidth*59f/700f), (int)(GameController.screenHeight*36f/349f));
-        displacing = new Vector2(-GameController.screenWidth*5f/700f, GameController.screenHeight*(14f)/349);
+        cannonRectPattern = new Rect(0, 0, (int)(GameController.screenWidth*62f/700f),
+                (int)(GameController.screenHeight*33f/349f));
+        carriageRectPattern = new Rect(0, 0, (int)(GameController.screenWidth*59f/700f),
+                (int)(GameController.screenHeight*36f/349f));
+        displacing = new Vector2(-GameController.screenWidth*5f/700f,
+                GameController.screenHeight*(14f)/349);
         carriageRectPattern.bottom += displacing.y;
         carriageRectPattern.top += displacing.y;
         carriageRectPattern.left += displacing.x;
         carriageRectPattern.right += displacing.x;
-        nailPattern = new Vector2(GameController.screenWidth*35f/700f, GameController.screenHeight*17f/349);
+        nailPattern = new Vector2(GameController.screenWidth*35f/700f,
+                GameController.screenHeight*17f/349);
     }
 
     public void Activate()
     {
-
-
         GameController.AttachSlider(velocitySlider);
         velocitySlider.Activate();
     }
 
     public void Deactivate()
     {
-        Log.d("slider", "deactivate");
         GameController.DetachSlider(velocitySlider);
     }
-
-    /*public void rotate(float angle)
-    {
-        currentAngle += angle;
-    }*/
 
     public Bullet CreateBullet(float windVelocity)
     {

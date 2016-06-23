@@ -3,16 +3,13 @@ package ru.videniya239.simpleballistics;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 
 public class MainActivity extends Activity {
 
@@ -34,14 +31,6 @@ public class MainActivity extends Activity {
 
     public static Bitmap[] numbers;
     public static Bitmap bullets;
-
-   /* private static MainActivity instance;
-
-    public static MainActivity getInstance() {
-        return instance;
-    }*/
-
-    //public static SeekBar seekBar;
 
     public static Bitmap level1Map;
     public static Bitmap level1Texture;
@@ -161,22 +150,11 @@ public class MainActivity extends Activity {
 
         ImageView tutorialView = (ImageView) findViewById(R.id.tutorial);
         tutorial = BitmapFactory.decodeResource(this.getResources(), R.drawable.tutorial);
-      //  BitmapFactory.decodeResource(activity)
-
-
-
-       // GameController.Init(this);
-       // setContentView(GameController.GetInstance());
 
 
         gameController = new GameController(this);
 
-        //LevelManager.GetInstance().Reset();
-        //GameController.Init(this);
-        //setContentView(GameController.GetInstance());
-       setContentView(gameController);
-        //myView = new MyView(this);
-       // gameController = new GameController(this);
+        setContentView(gameController);
         gestureDetector = new GestureDetector(this, new MyGestureListener());
 
 

@@ -4,11 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
-
-import junit.framework.Assert;
-
-import java.util.ArrayList;
 
 public class PlayGameState implements IGameState
 {
@@ -45,8 +40,6 @@ public class PlayGameState implements IGameState
     @Override
     public void InvokeState()
     {
-         Log.d("levelmanager", "" + levelManager.GetCurrentLevelNumber() + " " + levelManager.GetLevelCount());
-
         if (levelManager.GetCurrentLevelNumber() < levelManager.GetLevelCount())
         {
             if (levelManager.GetCurrentLevelNumber() == 0)
@@ -58,7 +51,6 @@ public class PlayGameState implements IGameState
                 LifeManager.getInstance().changeLives(deltaLives);
             }
             levelManager.MoveNext();
-            Log.d("levelmanager", "" + levelManager.GetCurrentLevelNumber());
         }
         else
         {
