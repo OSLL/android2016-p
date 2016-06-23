@@ -102,9 +102,10 @@ public class StartMenu implements Menu
     {
         GameController.stopGame();
     }
+
     private void infoButtonTapped()
     {
-
+        GameController.setGamePhase(GameState.PHASE_INFO);
     }
     private void settingsButtonTapped()
     {

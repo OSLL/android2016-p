@@ -11,7 +11,7 @@ public class LifeManager
     {
     }
 
-    private Rect lifeRect;
+    public Rect lifeRect;
     private Paint paint;
 
     private static LifeManager instance;
@@ -47,31 +47,32 @@ public class LifeManager
     public void Draw(Canvas canvas)
     {
 
-        Vector2 livesTextPosition = new Vector2(GameController.screenWidth, 0);
-        int tmpLife = lives;
-        int i = 1;
-        while (tmpLife >= 0)
+        if ((canvas != null) && (MainActivity.numbers != null))
         {
-            int number = tmpLife % 10;
-            canvas.drawBitmap(MainActivity.numbers[number], null,
-                    new Rect((int)GameController.screenWidth - i * lifeRect.width(), 0,
-                             (int)GameController.screenWidth - (i - 1) * lifeRect.width(),
-                             lifeRect.height()), paint);
-            tmpLife /= 10;
-            i++;
+            Vector2 livesTextPosition = new Vector2(GameController.screenWidth, 0);
+            int tmpLife = lives;
+            int i = 1;
+            while (tmpLife >= 0) {
+                int number = tmpLife % 10;
+                canvas.drawBitmap(MainActivity.numbers[number], null,
+                        new Rect((int) GameController.screenWidth - i * lifeRect.width(), 0,
+                                (int) GameController.screenWidth - (i - 1) * lifeRect.width(),
+                                lifeRect.height()), paint);
+                tmpLife /= 10;
+                i++;
 
-            if (tmpLife == 0)
-            {
-                break;
+                if (tmpLife == 0) {
+                    break;
+                }
+                //Sprite currentBall = lifeBalls.ElementAt(i);
+                // currentBall.Transform.position = new Vector2();
+
+                //currentBall.Update(gameTime);
             }
-            //Sprite currentBall = lifeBalls.ElementAt(i);
-           // currentBall.Transform.position = new Vector2();
-
-            //currentBall.Update(gameTime);
+            canvas.drawBitmap(MainActivity.bullets, null,
+                    new Rect((int) GameController.screenWidth - (i - 1) * lifeRect.width() - lifeRect.width() * 3, 0,
+                            (int) GameController.screenWidth - (i - 1) * lifeRect.width(),
+                            lifeRect.height()), paint);
         }
-        canvas.drawBitmap(MainActivity.bullets, null,
-                new Rect((int)GameController.screenWidth - (i - 1) * lifeRect.width() - lifeRect.width() * 3, 0,
-                        (int)GameController.screenWidth - (i - 1) * lifeRect.width(),
-                        lifeRect.height()), paint);
     }
 }

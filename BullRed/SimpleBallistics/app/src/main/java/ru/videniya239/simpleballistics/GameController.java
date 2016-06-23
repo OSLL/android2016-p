@@ -18,7 +18,8 @@ enum GameState
 	PHASE_PLAY,
 	PHASE_END_LEVEL,
 	PHASE_RESULT,
-	PHASE_SETTINGS
+	PHASE_SETTINGS,
+	PHASE_INFO
 }
 
 public class GameController extends SurfaceView implements SurfaceHolder.Callback
@@ -107,6 +108,9 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 			case PHASE_SETTINGS:
 				currentState = new SettingsGameState();
 				break;
+			case PHASE_INFO:
+				currentState = new InfoState();
+				break;
 		}
 
 		currentState.InvokeState();
@@ -147,6 +151,9 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 	public static void stopGame()
 	{
 		drawThread.setRunning(false);
+		MainActivity.onFinish();
+		activity.finish();
+
 	}
 
 	// releases resources; called by onDestroy method
@@ -199,11 +206,12 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 
 	private void notifyButtons(Vector2 position)
 	{
-		for (ITappable button : buttons)
-		{
-			boolean caught = button.onTap(position);
-			if (caught)
-				break;
+		if (buttons != null) {
+			for (ITappable button : buttons) {
+				boolean caught = button.onTap(position);
+				if (caught)
+					break;
+			}
 		}
 	}
 
@@ -289,10 +297,11 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 					{
 						synchronized (surfaceHolder)
 						{
-
-							screenHeight = canvas.getHeight();
-							screenWidth = canvas.getWidth();
-							draw(canvas);
+							if (canvas != null) {
+								screenHeight = canvas.getHeight();
+								screenWidth = canvas.getWidth();
+								draw(canvas);
+							}
 						}
 					}
 				}
@@ -305,7 +314,7 @@ public class GameController extends SurfaceView implements SurfaceHolder.Callbac
 					}
 				}
 			}
-			activity.finish();
+
 		}
 	}
 }

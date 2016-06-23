@@ -215,4 +215,27 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/gameover"/>
 
+    <ImageView
+        android:id="@+id/velocity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/velocity"/>
+
+    <ImageView
+        android:id="@+id/wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/wind"/>
+
+    <ImageView
+        android:id="@+id/tutorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/tutorial"/>
+
+
+
 </RelativeLayout>

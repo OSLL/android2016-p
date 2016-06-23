@@ -37,7 +37,13 @@ public class LevelManager
 
     public Level GetCurrentLevel()
     {
+        if (levels != null)
+            if (GetCurrentLevelNumber() >= 1)
         return levels.get(GetInternalCurrentLevelNumber());
+        else
+            return null;
+        else
+            return null;
     }
 
     public int GetCurrentLevelNumber() {
@@ -211,15 +217,15 @@ public class LevelManager
             Assert.fail("Попытка обратиться к несуществующему уровню.");
 
         SetInternalCurrentLevelNumber(number);
-        Log.d("levelManager", "Устанавливаем уровень " + currentLevelNumber);
+        //Log.d("levelManager", "Устанавливаем уровень " + currentLevelNumber);
         levels.get(GetInternalCurrentLevelNumber()).Start();
     }
 
     public void MoveNext()
     {
-        Log.d("levelmanager", "было: " + currentLevelNumber);
+        //Log.d("levelmanager", "было: " + currentLevelNumber);
         SetLevel(currentLevelNumber + 1);
-        Log.d("levelmanager", "стало: " + currentLevelNumber);
+        //Log.d("levelmanager", "стало: " + currentLevelNumber);
     }
 
     public void AddLevel(Level level)

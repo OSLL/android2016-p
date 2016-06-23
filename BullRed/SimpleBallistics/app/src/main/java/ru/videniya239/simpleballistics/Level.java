@@ -21,14 +21,19 @@ public class Level //implements Menu
 
     private final int checkAngle = 60;
 
-
+    private Rect numberRect;
+    private Rect windRect;
 
     private boolean bulletFlying;
-    private float windVelocity;
+    private int windVelocity;
+
+    private boolean miss;
+    private boolean target;
 
     public static ArrayList<Vector2> traectory;
 
-    public void Init(Bitmap background, Bitmap levelMap, float windVelocity, Rect carriageRect, Rect cannonRect, Vector2 nail, int id)
+
+    public void Init(Bitmap background, Bitmap levelMap, int windVelocity, Vector2 trans, int id)
     {
         this.background = new BackTexture(background);
         this.levelMap = levelMap;
@@ -38,23 +43,10 @@ public class Level //implements Menu
         paint = new Paint();
         paint.setColor(Color.WHITE);
 
-        cannon = new Cannon(45, nail);//, cannonRect, carriageRect);
 
-        if (id == 1) {
-            cannon.velocitySlider.firstUp = true;
-        }
-    }
-    public void Init(Bitmap background, Bitmap levelMap, float windVelocity, Vector2 trans, int id)
-    {
-        this.background = new BackTexture(background);
-        this.levelMap = levelMap;
-
-        this.windVelocity = windVelocity;
-        traectory = new ArrayList<>();
-        paint = new Paint();
-        paint.setColor(Color.WHITE);
 
         cannon = new Cannon(45, trans);
+
 
         if (id == 1)
         {
@@ -64,6 +56,15 @@ public class Level //implements Menu
     public void Start()
     {
         cannon.Activate();
+        numberRect = new Rect(LifeManager.getInstance().lifeRect);
+
+        windRect = new Rect(LifeManager.getInstance().lifeRect);
+
+        windRect.set(0, 0, numberRect.width() * 2, numberRect.height());
+        numberRect = new Rect(numberRect.width() * 2 / 3, windRect.height() / 4,
+                numberRect.width() * 4 / 3,
+                numberRect.height() * 3 / 4);
+
     }
 
     public void Shoot()
@@ -80,6 +81,9 @@ public class Level //implements Menu
     public void Draw(Canvas canvas)
     {
         background.draw(canvas);
+
+        drawWind(canvas);
+
         LifeManager.getInstance().Draw(canvas);
         cannon.DrawCannon(canvas);
         if (!bulletFlying)
@@ -101,6 +105,31 @@ public class Level //implements Menu
         }
     }
 
+    private void drawWind(Canvas canvas)
+    {
+        if ((canvas != null) && (MainActivity.numbers != null))
+        {
+            //Vector2 livesTextPosition = new Vector2(GameController.screenWidth, 0);
+
+
+            String tmpWindVelocity = String.valueOf(windVelocity);
+                canvas.drawBitmap(MainActivity.wind, null, windRect, paint);
+            int lenVelocity = tmpWindVelocity.length();
+
+            for (int i = 0; i < tmpWindVelocity.length(); i++)
+            {
+                int number = Integer.parseInt(tmpWindVelocity.charAt(i) + "");
+                canvas.drawBitmap(MainActivity.numbers[number], null,
+                        new Rect(windRect.width() * 6 / 5 + i * numberRect.width(), numberRect.top, windRect.width() * 6 / 5 + (i + 1) * numberRect.width(), numberRect.bottom), paint);
+
+            }
+
+            canvas.drawBitmap(MainActivity.velocity, null,
+                    new Rect(windRect.width() * 6 / 5 + lenVelocity * numberRect.width(),
+                            numberRect.top, windRect.width() * 6 / 5 + (lenVelocity + 1) * numberRect.width() + numberRect.width() * 1, numberRect.bottom), paint);
+        }
+    }
+
     public void Update(float deltaT)
     {
         if (!bulletFlying)
@@ -114,12 +143,14 @@ public class Level //implements Menu
         {
             if (bullet != null)
             {
+                miss = false;
+                target = false;
                 for (int i = 0; i < 360 / checkAngle; i++)
                 {
                     Vector2 checkPoint = getCheckCoord(checkAngle * i);
                     if (insideScreen(checkPoint.x, checkPoint.y))
                     {
-                        if (!CheckColor(checkPoint))
+                        /*if (!CheckColor(checkPoint))
                         {
                             bullet.Update(deltaT);
                             break;
@@ -129,8 +160,27 @@ public class Level //implements Menu
                         }
                     } else {
                         miss();
-                        break;
+                        break;*/
+                        CheckColor(checkPoint);
+
                     }
+                    else
+                    {
+                        miss = true;
+                    }
+                }
+                if (target)
+                {
+                    onTarget();
+                }
+                else
+                if (miss)
+                {
+                    miss();
+                }
+                else
+                {
+                    bullet.Update(deltaT);
                 }
             }
         }
@@ -142,25 +192,31 @@ public class Level //implements Menu
                 bullet.getPosY() + (float)Math.sin(angle * Math.PI / 180) * bullet.drawRadius);
     }
 
-    private boolean CheckColor(Vector2 pos)
+    private void CheckColor(Vector2 pos)
     {
-        if (cannon.cannonRect.contains((int)pos.x, (int)pos.y) || (cannon.carriageRect.contains((int)pos.x, (int)pos.y)))
+        if ((cannon.carriageRect.contains((int)pos.x, (int)pos.y)))
         {
-            miss();
-            return true;
+            //miss();
+            //return true;
+            //return false;
+            miss = true;
         }
 
         if (Color.red(getMapPixel((int)pos.x, (int)pos.y)) >= 200) {
-            onTarget();
-            return true;
+            //onTarget();
+            //return true;
+            target = true;
         }
         if (Color.green(getMapPixel((int)pos.x, (int)pos.y)) > 200) {
-            miss();
-            return true;
+            //miss();
+            //return true;
+            //return false;
+            miss = true;
         }
         else
         {
-             return false;
+             //return false;
+
         }
     }
 

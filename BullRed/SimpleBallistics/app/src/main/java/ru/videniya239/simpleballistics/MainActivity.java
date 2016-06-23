@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,12 +16,17 @@ import android.widget.SeekBar;
 
 public class MainActivity extends Activity {
 
-    public static Bitmap carriageImage;
+
+    public static Bitmap tutorial;
     private GameController gameController;
     private GestureDetector gestureDetector;
     public static Bitmap startMenuImage;
     public static Bitmap cannon;
+    public static Bitmap carriageImage;
     public static Bitmap arrow;
+
+    public static Bitmap wind;
+    public static Bitmap velocity;
 
     public static Bitmap win;
     public static Bitmap lose;
@@ -58,8 +64,6 @@ public class MainActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
-        //seekBar = (SeekBar)findViewById(R.id.seekBar);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         startMenuImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.startmenu1);
@@ -148,6 +152,15 @@ public class MainActivity extends Activity {
 
         ImageView bulletsView = (ImageView) findViewById(R.id.bullets);
         bullets = BitmapFactory.decodeResource(this.getResources(), R.drawable.bullets);
+
+        ImageView windView = (ImageView) findViewById(R.id.wind);
+        wind = BitmapFactory.decodeResource(this.getResources(), R.drawable.wind);
+
+        ImageView velocityView = (ImageView) findViewById(R.id.velocity);
+        velocity = BitmapFactory.decodeResource(this.getResources(), R.drawable.velocity);
+
+        ImageView tutorialView = (ImageView) findViewById(R.id.tutorial);
+        tutorial = BitmapFactory.decodeResource(this.getResources(), R.drawable.tutorial);
       //  BitmapFactory.decodeResource(activity)
 
 
@@ -165,6 +178,39 @@ public class MainActivity extends Activity {
         //myView = new MyView(this);
        // gameController = new GameController(this);
         gestureDetector = new GestureDetector(this, new MyGestureListener());
+
+
+        long heapSize = Runtime.getRuntime().totalMemory();
+        //Log.d("heap", "" + heapSize);
+    }
+
+    public static void onFinish()
+    {
+        startMenuImage = null;
+        cannon = null;
+        carriageImage = null;
+        arrow = null;
+
+
+        tutorial = null;
+        win = null;
+        lose = null;
+        settings = null;
+
+        numbers = null;
+        bullets = null;
+
+
+        level1Map = null;
+        level1Texture = null;
+        level2Map = null;
+        level2Texture = null;
+        level3Map = null;
+        level3Texture = null;
+        level4Map = null;
+        level4Texture = null;
+        level5Map = null;
+        level5Texture = null;
     }
 
     @Override

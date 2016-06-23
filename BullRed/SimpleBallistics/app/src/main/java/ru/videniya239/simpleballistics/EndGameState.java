@@ -33,11 +33,11 @@ public class EndGameState implements IGameState, Menu
     {
         // exitButton = new Button(0, 0, 300, 300, ButtonName.ExitButton);
         //exitButton.attach(this);
-        restartButton = new Button(GameController.screenWidth*(42f/850f), GameController.screenHeight*(388f/501f),
-                GameController.screenWidth*(135f/850f), GameController.screenHeight*(477f/501f), ButtonName.RestartButton);
+        restartButton = new Button(GameController.screenWidth*(22f/1280f), GameController.screenHeight*(470f/628f),
+                GameController.screenWidth*(164f/1280f), GameController.screenHeight*(611f/628f), ButtonName.RestartButton);
         restartButton.attach(this);
-        menuButton = new Button(GameController.screenWidth*(717f/850f), GameController.screenHeight*(388f/501f),
-                GameController.screenWidth*(812f/850f), GameController.screenHeight*(477f/501f), ButtonName.MenuButton);
+        menuButton = new Button(GameController.screenWidth*(1113f/1280f), GameController.screenHeight*(470f/628f),
+                GameController.screenWidth*(1258f/1280f), GameController.screenHeight*(611f/628f), ButtonName.MenuButton);
         menuButton.attach(this);
         win = new BackTexture(MainActivity.win);
         lose = new BackTexture(MainActivity.lose);
@@ -91,6 +91,8 @@ public class EndGameState implements IGameState, Menu
         //RestartGame();
         LevelManager.GetInstance().Reset();
         GameController.InitNewGame();
+        //GameController.DetachButton(restartButton);
+        //GameController.DetachButton(menuButton);
         GameController.setGamePhase(GameState.PHASE_NEW_GAME);
     }
     private void restartButtonTapped()

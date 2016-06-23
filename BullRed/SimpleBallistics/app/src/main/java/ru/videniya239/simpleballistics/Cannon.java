@@ -82,7 +82,7 @@ public class Cannon
     public Bullet CreateBullet(float windVelocity)
     {
 
-        float deltaL = (cannonRect.right - nailPos.x) * 1.3f;
+        float deltaL = (cannonRect.right - nailPos.x) * 1f;
         float bulletPosX = deltaL * (float)Math.cos(currentAngle * Math.PI / 180) + nailPos.x;
         float bulletPosY = deltaL * (float)Math.sin(currentAngle * Math.PI / 180) + nailPos.y;
         Vector2 bulletStartPos = new Vector2(bulletPosX, bulletPosY);

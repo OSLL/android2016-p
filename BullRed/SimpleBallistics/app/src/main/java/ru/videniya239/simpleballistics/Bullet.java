@@ -77,6 +77,7 @@ public class Bullet
         Init();
         posX = startPos.x * w_m / w;
         posY = startPos.y * w_m / w;
+        //currentTime = 500;
 
     }
 

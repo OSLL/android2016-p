@@ -3,13 +3,12 @@ package ru.videniya239.simpleballistics;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-/**
- * Created by user on 6/20/2016.
- */
-public class SettingsGameState implements IGameState, Menu {
+public class InfoState implements IGameState, Menu
+{
     private Button menuButton;
-    private BackTexture settings;
+    private BackTexture tutorial;
     private Paint paint;
+
     @Override
     public void show() {
 
@@ -28,10 +27,13 @@ public class SettingsGameState implements IGameState, Menu {
     @Override
     public void InvokeState()
     {
-        menuButton = new Button(GameController.screenWidth*(587f/1280f), GameController.screenHeight*(483f/628f),
-            GameController.screenWidth*(710f/1280f), GameController.screenHeight*(600f/628f), ButtonName.MenuButton);
+        //p
+        menuButton = new Button(GameController.screenWidth*(15f/1280f), GameController.screenHeight*(500f/628f),
+                GameController.screenWidth*(124f/1280f), GameController.screenHeight*(613f/628f), ButtonName.MenuButton);
+
+
         menuButton.attach(this);
-        settings = new BackTexture(MainActivity.settings);
+        tutorial = new BackTexture(MainActivity.tutorial);
     }
 
     @Override
@@ -42,7 +44,7 @@ public class SettingsGameState implements IGameState, Menu {
 
     @Override
     public void Draw(Canvas canvas) {
-        settings.draw(canvas, paint);
+        tutorial.draw(canvas, paint);
     }
 
     @Override

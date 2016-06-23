@@ -91,23 +91,26 @@ public class Slider
 
     public void draw(Canvas canvas)
     {
-        paint.setColor(Color.BLACK);
-        //canvas.drawRect(sliderRect, paint);
+        if ((canvas != null) && (MainActivity.arrow != null))
+        {
+            paint.setColor(Color.BLACK);
+            //canvas.drawRect(sliderRect, paint);
 
-        //paint.setColor(Color.BLUE);
+            //paint.setColor(Color.BLUE);
         /*canvas.drawLine(sliderCollider.rect.right, sliderCollider.rect.top,
                 sliderCollider.rect.right, sliderCollider.rect.bottom, paint);*/
-        //canvas.drawRect(sliderCollider.rect, paint);
-        //paint.setColor(Color.MAGENTA);
-        //canvas.drawRect(cursorRect, paint);
+            //canvas.drawRect(sliderCollider.rect, paint);
+            //paint.setColor(Color.MAGENTA);
+            //canvas.drawRect(cursorRect, paint);
 
-        canvas.save();
-       // Log.d("slider", "" + value);
-        canvas.rotate(angle, centre.x, centre.y);
-        canvas.scale(value / (float)maxValue, 1, startPoint.x, startPoint.y);
-        canvas.drawBitmap(MainActivity.arrow, null, sliderRect, paint);
-        //canvas.drawLine(centre.x, centre.y, tapPosition.x, tapPosition.y, paint);
-        canvas.restore();
+            canvas.save();
+            // Log.d("slider", "" + value);
+            canvas.rotate(angle, centre.x, centre.y);
+            canvas.scale(value / (float) maxValue, 1, startPoint.x, startPoint.y);
+            canvas.drawBitmap(MainActivity.arrow, null, sliderRect, paint);
+            //canvas.drawLine(centre.x, centre.y, tapPosition.x, tapPosition.y, paint);
+            canvas.restore();
+        }
 
     }
 

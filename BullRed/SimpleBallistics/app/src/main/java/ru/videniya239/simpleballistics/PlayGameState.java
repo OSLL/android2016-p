@@ -22,7 +22,7 @@ public class PlayGameState implements IGameState
     @Override
     public void Update(float deltaT)
     {
-        if (levelManager.GetCurrentLevelNumber() >= 0)
+        if (levelManager.GetCurrentLevelNumber() >= 1)
         {
             levelManager.GetCurrentLevel().Update(deltaT);
         }
@@ -31,6 +31,7 @@ public class PlayGameState implements IGameState
     @Override
     public void Draw(Canvas canvas)
     {
+        if (levelManager.GetCurrentLevelNumber() > 0)
         levelManager.GetCurrentLevel().Draw(canvas);
     }
 
